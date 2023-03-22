@@ -68,7 +68,7 @@ export class BookingComponent implements OnDestroy, OnInit {
       (response) => {
         this.shortletData = response;
         this.calculateBill();
-        console.log((this.shortletPictures = response.pictures));
+        this.shortletPictures = response.pictures
         // this.shortletPictures = response.pictures; //pictures of shortlet from API
       },
       (error) => console.log(error)

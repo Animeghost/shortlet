@@ -1,0 +1,36 @@
+.form {
+    display: flex;
+    justify-content: center;
+}
+
+.input-wrapper {
+    position: relative;
+  }
+  
+  input {
+    border: 1px solid gray;
+    /* border-radius: 6px; */
+    position: relative;
+    width: 300px;
+    margin: 10px;
+    line-height: 6ex;
+    padding-left: 0.5rem;
+  }
+  
+  label {
+    position: absolute;
+    top: 0.2ex;
+    z-index: 1;
+    left: 1em;
+    background-color: white;
+    padding: 0 5px;
+  }
+
+  button {
+    border: none;
+    border-radius: 13px;
+    padding: 0.5rem 3.5rem;
+    background-color: blue;
+    color: #ffffff;
+    /* margin: 0rem 5rem; */
+  }

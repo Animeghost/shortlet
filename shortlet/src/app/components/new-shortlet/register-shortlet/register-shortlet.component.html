@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="form">
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div class="input-wrapper">
+                <label for="">Title</label>
+                <input type="text" ngModel name="title"  />
+            </div>
+        
+            <div class="input-wrapper">
+                <label for="">First Name</label>
+                <input type="text" ngModel name="firstName"  />
+            </div>
+        
+            <div class="input-wrapper">
+                <label for="">Last Name</label>
+                <input type="text" ngModel name="lastName"  />
+            </div>
+        
+            <div class="input-wrapper">
+                <label for="">Max No of Guest</label>
+                <input type="number" ngModel name="guest"  />
+            </div>
+        
+            <div class="input-wrapper">
+                <label for="">Price per night</label>
+                <input type="number" ngModel name="price"  />
+            </div>
+        
+            <div class="input-wrapper">
+                <label for="">Description</label>
+                <input type="text" ngModel name="description"  />
+            </div>
+        
+            <div class="input-wrapper">
+                <label for="">Address</label>
+                <input type="text" ngModel name="address"  />
+            </div>
+
+
+            <!-- <div class="input-wrapper">
+                <label for="file">Select image</label>
+                <input id="file" type="file" multiple ngModel name="photos"/>
+            </div> -->
+
+
+            
+
+            <div class="submit"> 
+                <!-- <button type="submit">Upload Pictures</button> -->
+                <button  type="submit">Register Property</button>
+            </div>
+        </form>
+    </div>
+
+    <h1>{{form.description}}</h1>
+    <h1>{{form.title}}</h1>
+    <!-- <h1>{{form.firstName + " " +firstname}}</h1> -->
+    <h1># {{form.photos}}</h1>
+</div>

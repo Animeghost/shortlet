@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">HM Shortlets</a>
+    <!-- <div class="search">
+      <input type="text" placeholder="Start your search">
+    </div> -->
     <button
       class="navbar-toggler"
       type="button"
@@ -32,7 +35,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Rent your home</a>
+            <a class="nav-link" href="#" routerLink="host/shortlets">Rent your home</a>
           </li>
         </ul>
       </div>
@@ -43,11 +46,11 @@
             <a class="nav-link" href="#">Trips</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Account</a>
+            <a class="nav-link" href="#" >Account</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">Rent your home</a>
+            <a class="nav-link" href="#" routerLink="host/shortlets">Rent your home</a>
           </li>
           <li class="nav-item" (click)="onLogOut()">
             <a class="nav-link" style="color: red" href="#">Log out</a>
@@ -100,7 +103,7 @@
   </ul>
   <hr />
   <ul style="list-style-type: none; padding: 0">
-    <li>Rent your home</li>
+    <li routerLink="host/shortlets">Rent your home</li>
     <li style="margin-bottom: 10px">Help</li>
   </ul>
 </div>
