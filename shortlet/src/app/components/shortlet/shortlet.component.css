@@ -146,6 +146,10 @@
   text-align: center;
 }
 
+.counter_number_div {
+  width: 68%;
+}
+
 .guests_label {
   color: #4a4a4a;
   font-size: 14px;
@@ -235,13 +239,12 @@ mat-label {
   }
 }
 @media only screen and (max-width: 768px) {
-  mat-form-field {
-    width: 48%;
+  .counter_number_div {
+    width: 54%;
   }
 
-  .reservation {
-    margin-left: 0;
-    margin-top: 0.75rem;
+  mat-form-field {
+    width: 48%;
   }
 
   .reserve-btn > button {
@@ -249,7 +252,7 @@ mat-label {
   }
 }
 
-@media only screen and (max-width: 426.98px) {
+@media only screen and (max-width: 426px) {
   .reservation {
     margin-left: 0;
     margin-top: 7px;
@@ -265,6 +268,10 @@ mat-label {
 
   .secondDatepicker {
     margin-top: 10px;
+  }
+
+  .counter_number_div {
+    width: 73%;
   }
 
   .reserve-btn > button {

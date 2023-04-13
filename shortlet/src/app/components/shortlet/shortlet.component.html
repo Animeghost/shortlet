@@ -1,4 +1,4 @@
-<div class="container" *ngIf="showShortlet">
+<div class="container">
   <h2 style="padding-top: 1rem">{{ shortletData.name }}</h2>
   <div style="display: flex; justify-content: space-between">
     <div style="display: flex; gap: 0.5rem">
@@ -173,38 +173,43 @@
 
         <div class="guest_counter">
           <p class="guests_label">Guests</p>
+          <span (click)="decrement()"
+            ><img
+              [ngClass]="{
+                minGuestReached: counter === 1
+              }"
+              style="
+                width: 30px;
+                height: 30px;
+                margin-left: 10px;
+                cursor: pointer;
+              "
+              src="../../../assets/svg/minus.svg"
+              alt=""
+          /></span>
 
-          <h5 style="text-align: center">
-            <span class="float-start" (click)="decrement()"
-              ><img
-                [ngClass]="{
-                  minGuestReached: counter === 1
-                }"
-                style="
-                  width: 30px;
-                  height: 30px;
-                  margin-left: 5px;
-                  cursor: pointer;
-                "
-                src="../../../assets/svg/minus.svg"
-                alt=""
-            /></span>
-            {{ counter
-            }}<span class="float-end" (click)="increment()"
-              ><img
-                [ngClass]="{
-                  maxGuestReached: counter === shortletData.maxNoOfGuests
-                }"
-                style="
-                  width: 30px;
-                  height: 30px;
-                  margin-right: 5px;
-                  cursor: pointer;
-                "
-                src="../../../assets/svg/add.svg"
-                alt=""
-            /></span>
-          </h5>
+          <div
+            style="display: inline-block; text-align: center"
+            class="counter_number_div"
+          >
+            <span class="guest_number" style="font-size: 20px">{{
+              counter
+            }}</span>
+          </div>
+          <span class="float-end" (click)="increment()"
+            ><img
+              [ngClass]="{
+                maxGuestReached: counter === shortletData.maxNoOfGuests
+              }"
+              style="
+                width: 30px;
+                height: 30px;
+                margin-right: 10px;
+                cursor: pointer;
+              "
+              src="../../../assets/svg/add.svg"
+              alt=""
+          /></span>
         </div>
         <div class="col" style="padding-left: 0; padding-right: 0">
           <mat-form-field appearance="fill" class="reserve_datepicker">
