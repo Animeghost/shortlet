@@ -90,7 +90,7 @@ public class ReviewController {
                 return ResponseEntity.ok(apartments.get());
             }else {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("this user hasn't completed a stayed at the house" +
-                        " as such can't comment ");
+                        " as such can't give an accurate rating ");
             }
 
 
