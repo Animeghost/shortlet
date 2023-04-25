@@ -68,3 +68,35 @@ export interface NewShortlet {
   amenities?: any;
   // photos: File
 }
+
+// export interface Listings {
+//   name: string,
+//   status: string,
+//   noOfBedrooms: number,
+//   noOfBathrooms: number,
+//   country: string
+// }
+
+export interface Listings {
+  id: number;
+  name: string;
+  noOfBedrooms: number;
+  noOfBathrooms: number;
+  noOfBeds: number;
+  address: string;
+  state: string;
+  country: string;
+  pictures: Pictures;
+}
+
+export interface amenities {
+  air_condition: boolean;
+  bbq_grill: boolean;
+  fireplace: boolean;
+  first_aid_kit: true;
+  patio: boolean;
+  pool: boolean;
+  washer: boolean;
+  wifi: boolean;
+  work_space: boolean;
+}

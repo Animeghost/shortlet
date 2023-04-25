@@ -64,8 +64,10 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="host/shortlets">Rent your home</a>
           </li>
-          <li *ngIf="isUserAdmin" class="nav-item" routerLink="/admin">
-            <a class="nav-link">Switch to admin</a>
+          <li *ngIf="isUserAdmin" class="nav-item" (click)="onSwitchRole()">
+            <a class="nav-link">{{
+              isUseronAdminPage ? "Switch to user" : "Switch to admin"
+            }}</a>
           </li>
           <li class="nav-item" (click)="onLogOut()">
             <a class="nav-link" style="color: red">Log out</a>
@@ -73,13 +75,8 @@
         </ul>
       </div>
 
-      <p
-        *ngIf="isUserAdmin"
-        class="Admin removemine"
-        (click)="switchToAdmin()"
-        routerLink="/admin"
-      >
-        Switch to admin
+      <p *ngIf="isUserAdmin" class="Admin removemine" (click)="onSwitchRole()">
+        {{ isUseronAdminPage ? "Switch to user" : "Switch to admin" }}
       </p>
       <div class="float-end links removemine">
         <div
@@ -153,7 +150,9 @@
   </ul>
   <hr />
   <ul style="list-style-type: none; padding: 0">
-    <li (click)="toggleProfileDiv()">Rent your home</li>
+    <li (click)="toggleProfileDiv()" routerLink="host/shortlets">
+      Rent your home
+    </li>
     <li (click)="toggleProfileDiv()">Help</li>
     <li (click)="toggleProfileDiv(); onLogOut()" style="color: red">Log out</li>
   </ul>
@@ -205,21 +204,8 @@
               <span id="l">l</span> <span id="e">e</span>
             </span>
           </button>
-          <!-- <button
-            class="w-100"
-            data-bs-dismiss="modal"
-            (click)="authenticateWithFacebook()"x
-          >
-            Continue with facebook
-          </button> -->
         </div>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div> -->
     </div>
   </div>
 </div>

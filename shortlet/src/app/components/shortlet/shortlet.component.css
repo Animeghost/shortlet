@@ -1,5 +1,5 @@
 .container {
-  padding-bottom: 30px;
+  padding-bottom: 4.375rem;
 }
 
 .parent {
@@ -146,10 +146,6 @@
   text-align: center;
 }
 
-.counter_number_div {
-  width: 68%;
-}
-
 .guests_label {
   color: #4a4a4a;
   font-size: 14px;
@@ -211,6 +207,24 @@ mat-label {
   border-color: #4a4a4a;
 }
 
+#see-more {
+  display: inline-block;
+  background-color: #ff0066;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.see-more:hover {
+  background-color: #ff0066;
+}
+
 .send_comment {
   margin-top: 10px;
   width: 20%;
@@ -239,12 +253,13 @@ mat-label {
   }
 }
 @media only screen and (max-width: 768px) {
-  .counter_number_div {
-    width: 54%;
-  }
-
   mat-form-field {
     width: 48%;
+  }
+
+  .reservation {
+    margin-left: 0;
+    margin-top: 0.75rem;
   }
 
   .reserve-btn > button {
@@ -252,7 +267,7 @@ mat-label {
   }
 }
 
-@media only screen and (max-width: 426px) {
+@media only screen and (max-width: 426.98px) {
   .reservation {
     margin-left: 0;
     margin-top: 7px;
@@ -268,10 +283,6 @@ mat-label {
 
   .secondDatepicker {
     margin-top: 10px;
-  }
-
-  .counter_number_div {
-    width: 73%;
   }
 
   .reserve-btn > button {

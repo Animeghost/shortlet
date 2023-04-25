@@ -1,67 +1,77 @@
 <div class="container">
-  <!-- <ng-container *ngIf="(asyncTabs | async) === null">
-    Loading tabs...
-  </ng-container>
-
-  <mat-tab-group>
-    <mat-tab *ngFor="let tab of asyncTabs | async">
-      <ng-template mat-tab-label>{{ tab.label }}</ng-template>
-      {{ tab.content }}
-    </mat-tab>
-  </mat-tab-group> -->
-
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
     <mat-tab label="Pending Requests">
-      <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter1($event)"
-          placeholder="Ex. Mia"
-          #input1
-        />
-      </mat-form-field>
+      <div [hidden]="noPendingReq">
+        <p style="text-align: center; margin-top: 3rem">No pending requests</p>
+      </div>
 
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource1" matSort #Sort1="matSort">
-          <!-- Apartment name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Apartment Name
-            </th>
-            <td mat-cell *matCellDef="let row" style="color: #484848">
-              {{ row.name }}
-            </td>
-          </ng-container>
+      <div class="PendingRequestTables" [hidden]="!noPendingReq">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter1($event)"
+            placeholder="Ex. Mia"
+            #input1
+          />
+        </mat-form-field>
 
-          <!-- Location Column -->
-          <ng-container matColumnDef="country">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
-            <td mat-cell *matCellDef="let row" style="color: #484848">
-              {{ row.country }}
-            </td>
-          </ng-container>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource1" matSort #Sort1="matSort">
+            <!-- Apartment name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Apartment Name
+              </th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.name }}
+              </td>
+            </ng-container>
 
-          <!-- Action Column -->
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
-            <td mat-cell *matCellDef="let row">
-              <button class="btn rejectbtn">Reject requests</button>
-              <button class="btn acceptbtn">Accept requests</button>
-            </td>
-          </ng-container>
+            <!-- Location Column -->
+            <ng-container matColumnDef="country">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Location
+              </th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.country }}
+              </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+              <td mat-cell *matCellDef="let row">
+                <button
+                  class="btn rejectbtn"
+                  (click)="onReject(row)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#Reject"
+                >
+                  Reject requests
+                </button>
+                <button
+                  class="btn acceptbtn"
+                  (click)="onAccept(row)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#Accept"
+                >
+                  Accept requests
+                </button>
+              </td>
+            </ng-container>
 
-          <!-- Row shown when there is no matching data. -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">
-              No data matching the filter "{{ input1.value }}"
-            </td>
-          </tr>
-        </table>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
 
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+                No data matching the filter "{{ input1.value }}"
+              </td>
+            </tr>
+          </table>
+        </div>
         <mat-paginator
           #paginator1="matPaginator"
           [pageSizeOptions]="[5, 10, 25, 100]"
@@ -72,62 +82,69 @@
     <!-- break -->
     <!-- break -->
     <mat-tab label="All Users">
-      <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Ex. Peter"
-          #input
-        />
-      </mat-form-field>
+      <div [hidden]="noUsers">
+        <p style="text-align: center; margin-top: 3rem">No Users available</p>
+      </div>
 
-      <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort #sort2="matSort">
-          <!-- Username Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-            <td mat-cell *matCellDef="let row" style="color: #484848">
-              {{ row.name }}
-            </td>
-          </ng-container>
+      <div [hidden]="!noUsers" class="UsersTable">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Ex. Peter"
+            #input
+          />
+        </mat-form-field>
 
-          <!-- Email Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-            <td mat-cell *matCellDef="let row" style="color: #484848">
-              {{ row.email }}
-            </td>
-          </ng-container>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort #sort2="matSort">
+            <!-- Username Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Username
+              </th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.name }}
+              </td>
+            </ng-container>
 
-          <!-- Action Column -->
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Grant Access
-            </th>
-            <td mat-cell *matCellDef="let row">
-              <button
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#MakeAdmin"
-                (click)="getDataFromAdminClick(row)"
-              >
-                Make Admin
-              </button>
-            </td>
-          </ng-container>
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.email }}
+              </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Grant Access
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <button
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#MakeAdmin"
+                  (click)="getDataFromAdminClick(row)"
+                >
+                  Make Admin
+                </button>
+              </td>
+            </ng-container>
 
-          <!-- Row shown when there is no matching data. -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">
-              No data matching the filter "{{ input.value }}"
-            </td>
-          </tr>
-        </table>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+                No data matching the filter "{{ input.value }}"
+              </td>
+            </tr>
+          </table>
+        </div>
         <mat-paginator
           #paginator2="matPaginator"
           [pageSizeOptions]="[5, 10, 25, 100]"
@@ -135,7 +152,80 @@
         ></mat-paginator>
       </div>
     </mat-tab>
-    <!-- <mat-tab label="Third">Content 3</mat-tab> -->
+
+    <!-- third table  -->
+
+    <mat-tab label="All Admins">
+      <div [hidden]="noAdmins">
+        <p style="text-align: center; margin-top: 3rem">No Admins available</p>
+      </div>
+
+      <div [hidden]="!noAdmins" class="UsersTable">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter2($event)"
+            placeholder="Ex. Bassey"
+            #input2
+          />
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource2" matSort #sort3="matSort">
+            <!-- Username Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Username
+              </th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.name }}
+              </td>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.email }}
+              </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Revoke Access
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <button
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#RevokeAdmin"
+                  (click)="getDataFromAdminClick(row)"
+                >
+                  Remove Admin
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+                No data matching the filter "{{ input2.value }}"
+              </td>
+            </tr>
+          </table>
+        </div>
+        <mat-paginator
+          #paginator3="matPaginator"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          aria-label="Select page of users"
+        ></mat-paginator>
+      </div>
+    </mat-tab>
   </mat-tab-group>
 </div>
 
@@ -149,7 +239,7 @@
   Launch demo modal
 </button> -->
 
-<!-- Modal -->
+<!-- make admin Modal -->
 <div
   class="modal fade"
   id="MakeAdmin"
@@ -182,7 +272,150 @@
         >
           Close
         </button>
-        <button type="button" class="btn btn-primary" (click)="makeUserAdmin()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="makeUserAdmin()"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- revoke admin Modal -->
+<div
+  class="modal fade"
+  id="RevokeAdmin"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Revoke Admin privilege
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        You are about to Revoke admin privilege from {{ username }}
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          style="background-color: #eaeaea; color: #484848"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="removeAdmin()"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- reject request modal -->
+<div
+  class="modal fade"
+  id="Reject"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Reject apartment listing
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to reject this request ?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          style="background-color: #eaeaea; color: #484848"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="rejectListing()"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- accept request modal -->
+<div
+  class="modal fade"
+  id="Accept"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Accept apartment listing
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to accept this request ?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          style="background-color: #eaeaea; color: #484848"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="acceptListing()"
+        >
           Confirm
         </button>
       </div>

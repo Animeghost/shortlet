@@ -1,17 +1,17 @@
-<div *ngIf="pageDisplay" class="container">
+<div [hidden]="!pageDisplay" class="container">
   <p>
     <span id="home"><a class="home_link" routerLink="">Home</a></span
     ><span id="pointing_character">></span><span id="account">Trips</span>
   </p>
   <h4>Trips</h4>
 
-  <div *ngIf="!anyReservation" class="message_if_noReservation">
+  <div [hidden]="anyReservation" class="message_if_noReservation">
     <p style="text-align: center; margin-top: 3rem">
       You need to make a reservation to see them here!
     </p>
   </div>
 
-  <div id="reservationTable" *ngIf="anyReservation">
+  <div id="reservationTable" [hidden]="!anyReservation">
     <mat-form-field>
       <mat-label>Filter</mat-label>
       <input
@@ -36,7 +36,7 @@
         <ng-container matColumnDef="apartmentCountry">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
           <td mat-cell *matCellDef="let row" style="color: #484848">
-            {{ row.apartmentState }}, {{ row.apartmentCountry }}
+            {{ row.apartmentCountry }}
           </td>
         </ng-container>
 
@@ -88,10 +88,10 @@
           </td>
         </tr>
       </table>
-      <mat-paginator
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page of users"
-      ></mat-paginator>
     </div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
   </div>
 </div>

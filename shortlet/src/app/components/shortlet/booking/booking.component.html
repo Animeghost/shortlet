@@ -1,6 +1,13 @@
-<div class="container">
+<div class="container" style="padding-bottom: 4.375rem">
   <div>
-    <h2><i class="fa-solid fa-angle-left"></i>Request to book</h2>
+    <h2>
+      <i
+        (click)="back()"
+        style="font-size: 26px; margin-right: 10px; cursor: pointer"
+        class="fa-solid fa-angle-left"
+      ></i
+      >Request to book
+    </h2>
   </div>
 
   <div class="row">
@@ -31,28 +38,7 @@
               <p>{{ guests }} {{ guests == 1 ? "guest" : "guests" }}</p>
             </div>
           </div>
-          <!-- <hr *ngIf="isAuthenticated" /> -->
-          <!-- <h3 *ngIf="isAuthenticated">Choose how to pay</h3>
-          <div
-            *ngIf="isAuthenticated"
-            class="payment-options"
-            angular4-paystack
-            [email]="emailForPayment"
-            [amount]="totalForPaystack"
-            [ref]="reference"
-            [class]="'btn btn-primary'"
-            (paymentInit)="paymentInit()"
-            (onClose)="paymentCancel()"
-            (callback)="paymentDone($event)"
-          >
-            <div>
-              <h5>Pay in full</h5>
-              <p>Pay the total now and you're all set.</p>
-            </div>
-            <div>
-              <p>₦{{ total }}</p>
-            </div>
-          </div> -->
+
           <hr />
           <div *ngIf="!isAuthenticated">
             <h5>Log in or sign up to book</h5>
@@ -76,7 +62,7 @@
         <!-- bill-section -->
         <div class="bill-section">
           <div style="display: flex">
-            <img src="{{ shortletPictures[0].url }}" alt="" />
+            <img src="{{ shortletPictures[0]?.url }}" alt="" />
             <div style="height: 1px; padding-left: 0.5rem">
               <div style="line-height: 0.25rem">
                 <p style="font-size: 12px">Entire rental unit</p>
@@ -105,11 +91,11 @@
             </div>
             <div class="bill">
               <p>Cleaning fee</p>
-              <p>₦107</p>
+              <p>₦{{ cleaningFee }}</p>
             </div>
             <div class="bill">
               <p>HMS Service fee</p>
-              <p>₦237</p>
+              <p>₦{{ serviceFee }}</p>
             </div>
             <hr />
             <div class="bill">

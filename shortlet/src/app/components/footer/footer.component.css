@@ -10,8 +10,19 @@
 
 p {
   margin: 0;
+  text-align: center;
+  font-weight: 500;
 }
 
 .span_1 {
   margin-left: 20px;
+}
+
+i {
+  color: #ea4335;
+}
+
+.fa-instagram,
+.fa-facebook {
+  margin-left: 0.625rem;
 }

@@ -1,115 +1,291 @@
-<div class="container">
-    <div class="form">
-        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-            <div class="input-wrapper">
-                <label for="">Title</label>
-                <input type="text" ngModel name="name" />
-            </div>
+<div style="padding-bottom: 4.375rem" class="container">
+  <h1>Shortlet your Home</h1>
+  <p>Send a request to list your home</p>
 
-            <div class="input-wrapper">
-                <label for="">Description</label>
-                <input type="text" ngModel name="description"  required/>
-            </div>
-        
-            <div class="input-wrapper">
-                <label for="">Address</label>
-                <input type="text" ngModel name="address"   required/>
-            </div>
+  <div class="progress-bar">
+    <div class="progress" [style.width.%]="step * 25"></div>
+  </div>
+  <p>Step {{ step }} of 4</p>
+  <div class="form">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)" novalidate>
+      <div *ngIf="step === 1">
+        <div class="form-group">
+          <label>Title</label>
+          <input
+            formControlName="name"
+            type="text"
+            class="form-control"
+            required
+          />
+        </div>
 
-            <!-- <div class="input-wrapper">
-                <label for="">Email</label>
-                <input type="email" placeholder="sami@gmail.com" ngModel name="user_email"  />
-            </div> -->
-        
-            <!-- <div class="input-wrapper">
-                <label for="">First Name</label>
-                <input type="text" ngModel name="firstName"  />
-            </div> -->
-        
-            <div class="input-wrapper">
-                <label for="">No Of Bedrooms</label>
-                <input type="number" ngModel name="noOfBedrooms"   required/>
-            </div>
-       
-            <div class="input-wrapper">
-                <label for="">No Of Bathrooms</label>
-                <input type="number" ngModel name="noOfBathrooms"   required/>
-            </div>
-            
+        <div class="form-group">
+          <label>Description</label>
+          <textarea
+            formControlName="description"
+            class="form-control"
+          ></textarea>
+        </div>
 
-            <div class="input-wrapper">
-                <label for="">Max No of Guest</label>
-                <input type="number" ngModel name="maxNoOfGuests"   required/>
-            </div>
-        
-            <div class="input-wrapper">
-                <label for="">Price per night</label>
-                <input type="number" ngModel name="price"   required/>
-            </div>
+        <div class="form-group">
+          <label>Address</label>
+          <input
+            formControlName="address"
+            type="text"
+            class="form-control"
+            required
+          />
+        </div>
 
-            <div class="input-wrapper">
-                <label for="">propertyType</label>
-                <input type="text" ngModel name="propertyType"   required/>
-            </div>
+        <div class="form-group">
+          <label>Country</label>
+          <select formControlName="country">
+            <option *ngFor="let country of countries" [value]="country.name">
+              {{ country.name }}
+            </option>
+          </select>
+        </div>
+      </div>
 
-            <!-- <div class="input-wrapper">
-                <label for="">House Type</label>
-                <input type="text" ngModel name="houseType"  />
-            </div> -->
-            
-            <div class="input-wrapper">
-                <select name="cars" id="cars" ngModel name="propertyType" required>
-                    <option value="APARTMENT">Apartment</option>
-                    <option value="HOTEL">Hotel</option>
-                  </select>
-            </div>
+      <div *ngIf="step === 2">
+        <div class="form-group">
+          <label>Guest Capacity</label>
+          <input
+            formControlName="maxNoOfGuests"
+            type="number"
+            class="form-control"
+            (keypress)="keyPress($event)"
+            required
+          />
+        </div>
 
-            <div class="input-wrapper">
-                <select name="propertyType" id="property-type" ngModel name="houseType" required>
-                    <option value="PRIVATE_ROOM">Private Room</option>
-                </select>
-            </div>
+        <div class="form-group">
+          <label>No of Bedrooms</label>
+          <input
+            (keypress)="keyPress($event)"
+            formControlName="noOfBedrooms"
+            type="number"
+            class="form-control"
+            required
+          />
+        </div>
 
-            <div class="input-wrapper" >
-                <label for="">Amenities:</label>
-                <div>
-                  <input type="checkbox" name="wifi" [(ngModel)]="amenities.wifi">
-                  <label for="wifi">Wifi</label>
-                </div>
-                <div>
-                  <input type="checkbox" name="pool" [(ngModel)]="amenities.pool">
-                  <label for="pool">Pool</label>
-                </div>
-                <div>
-                  <input type="checkbox" name="amenities.gym" [(ngModel)]="amenities.gym">
-                  <label for="gym">Gym</label>
-                </div>
+        <div class="form-group">
+          <label>No of Beds</label>
+          <input
+            (keypress)="keyPress($event)"
+            formControlName="noOfBeds"
+            type="number"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>No of Bathrooms</label>
+          <input
+            (keypress)="keyPress($event)"
+            formControlName="noOfBathrooms"
+            type="number"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div *ngIf="step === 3">
+        <div class="form-group">
+          <label>House Type</label>
+          <select formControlName="houseType" required>
+            <option value="" disabled selected>Select your House Type</option>
+            <option value="PRIVATE_ROOM">Private Room</option>
+            <option value="WHOLE_HOUSE">Whole House</option>
+            <option value="SHARED_ROOM">Shared Room</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Property Type</label>
+          <select formControlName="propertyType" required>
+            <option value="" disabled selected>
+              Select your Property Type
+            </option>
+            <option value="HOTEL">Hotel</option>
+            <option value="GUESTHOUSE">GuestHouse</option>
+            <option value="CAMPER">Camper</option>
+            <option value="HOUSE">House</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Cleaning Fee (NGN)</label>
+          <input
+            (keypress)="keyPress($event)"
+            formControlName="cleaningFee"
+            type="number"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Price (NGN)</label>
+          <input
+            (keypress)="keyPress($event)"
+            formControlName="price"
+            type="number"
+            placeholder="Per Night"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div formArrayName="pictures">
+          <label>Upload Pictures</label>
+          <!-- <div *ngFor="let image of pictures.controls; let i = index">
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              (change)="onImageUpload($event, i)"
+              required
+              [formControlName]="i"
+              class="form-control"
+              style="margin-bottom: 8px"
+            />
+          </div> -->
+          <div
+            class="add-file col-sm-2"
+            (click)="fileInput.click()"
+            style="cursor: pointer"
+          >
+            <img
+              class="add-file-icon"
+              src="../../../../assets/Doc Mgnt icons/attach.svg"
+            />
+            <span>Add File</span>
+          </div>
+          <div class="selected-file" style="margin-top: 5px">
+            <ng-container
+              *ngFor="let file of shortletDocumentFile; let i = index"
+            >
+              <div>
+                <img
+                  class="file-icon"
+                  src="../../../../assets/Doc Mgnt icons/{{
+                    file.fileType
+                  }}.svg"
+                />{{ shortletDocumentFile[i].filename }}
+                <i
+                  class="fa fa-close"
+                  (click)="removeFile(i)"
+                  style="
+                    float: right;
+                    margin-top: 3px;
+                    cursor: pointer;
+                    color: red;
+                  "
+                ></i>
               </div>
-
-              <hr>
-              <div class="input-wrapper">
-                <label for="">Amenities</label>
-                <div *ngFor="let amenity of newShortlet.amenities; let i = index">
-                  <input type="text" [(ngModel)]="amenity.name" name="amenities[{{i}}].name" placeholder="Amenity name" />
-                  <input type="number" [(ngModel)]="amenity.quantity" name="amenities[{{i}}].quantity" placeholder="Quantity" />
-                </div>
-              </div>
-            <!-- <form >
-
-                <select name="cars" id="cars" ngModel name="houseType">
-                    <option value="APARTMENTsss">Apartment</option>
-                    <option value="HOTEL">Hotel</option>
-                  </select>
-
-            </form> -->            
-
-            <div class="submit"> 
-                <!-- <button type="submit">Upload Pictures</button> -->
-                <button  type="submit">Register Property</button>
-            </div>
+            </ng-container>
+          </div>
+        </div>
+        <form id="staff-file-upload" #shortletFile style="display: none">
+          <input
+            type="file"
+            class="hidden"
+            id="file-upload-1"
+            (change)="onFileSelect($event)"
+            #fileInput
+          />
         </form>
-    </div>
+      </div>
 
-    <!-- <h1>{{form.description}}</h1>
-    <h1>{{form.title}}</h1> -->
+      <div formGroupName="amenities" *ngIf="step == 4">
+        <label>Select Amenities</label>
+        <!-- new -->
+        <div class="amenities">
+          <div>
+            <div class="amenity">
+              <input id="gym" type="checkbox" formControlName="bbq_grill" />
+              <label for="bbq grill">BBQ Grill</label>
+            </div>
+
+            <div class="amenity">
+              <input type="checkbox" formControlName="pool" />
+              <label for="pool">Pool</label>
+            </div>
+
+            <div class="amenity">
+              <input type="checkbox" formControlName="wifi" />
+              <label for="wifi">Free Wi-Fi</label>
+            </div>
+          </div>
+          <div>
+            <div class="amenity">
+              <input id="gym" type="checkbox" formControlName="patio" />
+              <label for="patio">Patio</label>
+            </div>
+
+            <div class="amenity">
+              <input type="checkbox" formControlName="air_condition" />
+              <label for="airCondition">Air Condition</label>
+            </div>
+
+            <div class="amenity">
+              <input type="checkbox" formControlName="washer" />
+              <label for="washer">Washer</label>
+            </div>
+          </div>
+          <div>
+            <div class="amenity">
+              <input id="gym" type="checkbox" formControlName="first_aid_kit" />
+              <label for="first_aid_kit">First Aid Kit</label>
+            </div>
+
+            <div class="amenity">
+              <input type="checkbox" formControlName="fireplace" />
+              <label for="fireplace">Fireplace</label>
+            </div>
+
+            <div class="amenity">
+              <input type="checkbox" formControlName="work_space" />
+              <label for="work_space">Work Space</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="control">
+        <div class="controls">
+          <button *ngIf="step != 1" (click)="previous()" type="button">
+            Previous
+          </button>
+          <button *ngIf="step != 4" (click)="next()" type="button">Next</button>
+
+          <button
+            [disabled]="!myForm.valid"
+            type="submit"
+            *ngIf="step == 4"
+            id="button-2 slide"
+          >
+            Request to Add Home
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
+
+<!-- <div class="container" *ngIf="!username">
+  <div class="login">
+    <h5>Log in or sign up to add your home</h5>
+    <button class="social_button w-100" (click)="googleAuth()">
+      Continue with
+      <span>
+        <span id="g">G</span> <span id="o_first">o</span>
+        <span id="o_second">o</span> <span id="g_second">g</span>
+        <span id="l">l</span> <span id="e">e</span>
+      </span>
+    </button>
+    google logo
+  </div>
+</div> -->

@@ -48,7 +48,7 @@
               [ngClass]="{ active: i === 0 }"
             >
               <img
-                routerLink="shortlet/{{ shortlet.id }}"
+                routerLink="/shortlet/{{ shortlet.id }}"
                 style="cursor: pointer"
                 [src]="shortletPics.url"
                 class="d-block w-100"
@@ -92,15 +92,11 @@
       </div>
       <div
         class="shortlet_details"
-        routerLink="shortlet/{{ shortlet.id }}"
+        routerLink="/shortlet/{{ shortlet.id }}"
         style="cursor: pointer"
       >
         <div style="margin-top: 15px; margin-bottom: 5px">
-          <p
-            class="shortlet_name"
-            style="font-weight: 600; cursor: pointer"
-            routerLink="shortlet/{{ shortlet.id }}"
-          >
+          <p class="shortlet_name" style="font-weight: 600; cursor: pointer">
             {{ shortlet.address }}
           </p>
           <p class="shortlet_rating float-end">★ {{ shortlet.rating }}</p>

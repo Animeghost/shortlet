@@ -1,47 +1,126 @@
-<div class="container">
-    <div id="header">
-        <h3>HM</h3>
-        <div class="select">
-            <p>Ready to shortlet it?</p>
-            <button routerLink="new">Setup</button>
-        </div>
-    </div>    
-
-
-
-
-    <div class="shortlet-landing">
-        <div class="shortlet-landing-text">
-            <h1>Shortlet it.</h1>
-            <h1>You could earn over<br>
-                <span>₦50,000</span></h1>
-            <div>
-                <p style="list-style: un;">Contact support to estimate your earnings</p>
-            </div>
-        </div>
-
-
-        <div class="shortlet-landing-img">
-            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8aG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="">
-        </div>
+<div class="container" style="padding-bottom: 4.375rem">
+  <div id="header">
+    <h3></h3>
+    <div class="select">
+      <p
+        style="
+          margin-bottom: 0px;
+          line-height: 36px;
+          font-weight: 600;
+          cursor: pointer;
+          margin-right: 30px;
+        "
+        routerLink="/user-listings"
+        *ngIf="isUserAuth"
+      >
+        View Listings
+      </p>
+      <p style="margin-bottom: 0px; line-height: 36px">Ready to shortlet it?</p>
+      <button
+        *ngIf="!isUserAuth"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        login to setup
+      </button>
+      <button *ngIf="isUserAuth" routerLink="new">Setup</button>
     </div>
-     <section style="margin-top: 7.4rem;">
-        <h1 style="text-align: center;  font-weight: bold;">Shortlet it easily with OUR Setup</h1>
-        <img src="https://a0.muscache.com/im/pictures/65214d06-ffb4-4b70-93c0-01d368e76649.jpg?im_w=2560&im_q=highq" alt="" style="width: 100%; margin: 5rem 0rem 3rem;">
+  </div>
 
-        <div class="user">
-            <div>
-                <h2>One-to-one guidance from a Superhost</h2>
-                <p>We’ll match you with a Superhost in your area, who’ll guide you from your first question to your first guest—by phone, video call, or chat.</p>
-            </div>
-            <div>
-                <h2>An experienced guest for your first booking</h2>
-                <p>For your first booking, you can choose to welcome an experienced guest who has at least three stays and a good track record on Airbnb.</p>
-            </div>
-            <div>
-                <h2>Specialized support from Airbnb</h2>
-                <p>New Hosts get one-tap access to specially trained Community Support agents who can help with everything from account issues to billing support.</p>
-            </div>
+  <div class="shortlet-landing">
+    <div class="shortlet-landing-text">
+      <h1>Shortlet it.</h1>
+      <h1>
+        You could earn over<br />
+        <span>₦50,000</span>
+      </h1>
+      <div>
+        <p style="list-style: un">Contact support to estimate your earnings</p>
+      </div>
+    </div>
+
+    <div class="shortlet-landing-img">
+      <img
+        src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8aG91c2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+        alt=""
+      />
+    </div>
+  </div>
+  <section style="margin-top: 7.4rem">
+    <h1 style="text-align: center; font-weight: bold">
+      Shortlet it easily with OUR Setup
+    </h1>
+    <img
+      src="https://a0.muscache.com/im/pictures/65214d06-ffb4-4b70-93c0-01d368e76649.jpg?im_w=2560&im_q=highq"
+      alt=""
+      style="width: 100%; margin: 5rem 0rem 3rem"
+    />
+
+    <div class="user">
+      <div>
+        <h2>One-to-one guidance from a Superhost</h2>
+        <p>
+          We’ll match you with a Superhost in your area, who’ll guide you from
+          your first question to your first guest—by phone, video call, or chat.
+        </p>
+      </div>
+      <div>
+        <h2>An experienced guest for your first booking</h2>
+        <p>
+          For your first booking, you can choose to welcome an experienced guest
+          who has at least three stays and a good track record on Airbnb.
+        </p>
+      </div>
+      <div>
+        <h2>Specialized support from Airbnb</h2>
+        <p>
+          New Hosts get one-tap access to specially trained Community Support
+          agents who can help with everything from account issues to billing
+          support.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Log in or sign up
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h5>Welcome to Logo name</h5>
+        <div class="social_buttons">
+          <button
+            class="w-100"
+            (click)="authenticateWithGoogle()"
+            data-bs-dismiss="modal"
+          >
+            Continue with
+            <span>
+              <span id="g">G</span> <span id="o_first">o</span>
+              <span id="o_second">o</span> <span id="g_second">g</span>
+              <span id="l">l</span> <span id="e">e</span>
+            </span>
+          </button>
         </div>
-     </section>
+      </div>
+    </div>
+  </div>
 </div>

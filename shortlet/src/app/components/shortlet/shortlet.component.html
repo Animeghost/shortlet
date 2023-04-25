@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="showShortlet">
   <h2 style="padding-top: 1rem">{{ shortletData.name }}</h2>
   <div style="display: flex; justify-content: space-between">
     <div style="display: flex; gap: 0.5rem">
@@ -10,19 +10,19 @@
 
   <div class="parent">
     <div class="div1">
-      <img src="{{ shortletPictures[0].url }}" alt="apartment-pic" />
+      <img src="{{ shortletPictures[0]?.url }}" alt="apartment-pic" />
     </div>
     <div class="div2">
-      <img src="{{ shortletPictures[1].url }}" alt="apartment-pic" />
+      <img src="{{ shortletPictures[1]?.url }}" alt="apartment-pic" />
     </div>
     <div class="div3">
-      <img src="{{ shortletPictures[2].url }}" alt="apartment-pic" />
+      <img src="{{ shortletPictures[2]?.url }}" alt="apartment-pic" />
     </div>
     <div class="div4">
-      <img src="{{ shortletPictures[3].url }}" alt="apartment-pic" />
+      <img src="{{ shortletPictures[3]?.url }}" alt="apartment-pic" />
     </div>
     <div class="div5">
-      <img src="{{ shortletPictures[4].url }}" alt="apartment-pic" />
+      <img src="{{ shortletPictures[4]?.url }}" alt="apartment-pic" />
     </div>
   </div>
   <!-- flex -->
@@ -34,9 +34,9 @@
           <h2>Entire home hosted by {{ shortletData.users.name }}</h2>
           <div style="display: flex; gap: 0.5rem">
             <p>{{ shortletData.maxNoOfGuests }} guests</p>
-            <p>{{ shortletData.noOfBedrooms }} bedrooms</p>
-            <p>{{ shortletData.noOfBeds }} beds</p>
-            <p>{{ shortletData.noOfBathrooms }} baths</p>
+            <p>· {{ shortletData.noOfBedrooms }} bedrooms</p>
+            <p>· {{ shortletData.noOfBeds }} beds</p>
+            <p>· {{ shortletData.noOfBathrooms }} baths</p>
           </div>
           <hr />
 
@@ -53,9 +53,19 @@
         </div>
         <hr />
 
-        <p>
+        <!-- <p>
           {{ shortletData.description }}
-        </p>
+        </p> -->
+
+        <div *ngIf="showFullDescription">
+          <p>{{ shortletData.description }}</p>
+          <button (click)="toggleDescription()" id="see-more">See less</button>
+        </div>
+
+        <div *ngIf="!showFullDescription">
+          <p>{{ shortletData.description.substring(0, 200) }}...</p>
+          <button (click)="toggleDescription()" id="see-more">See more</button>
+        </div>
 
         <hr />
         <h4>What this place offers</h4>
@@ -63,56 +73,12 @@
         <div class="row">
           <div class="col-md-6" *ngFor="let item of amenities">{{ item }}</div>
         </div>
-        <div></div>
         <hr />
-        <div>
-          <h5>{{ numberOfNights }} nights in {{ shortletData.address }}</h5>
-
-          <p>{{ checkinDate | date }} - {{ minDateForCheckOut | date }}</p>
-
-          <mat-form-field
-            style="margin-right: 15px"
-            appearance="fill"
-            (click)="picker.open()"
-            class="removeOnScreen425"
-          >
-            <mat-label>Check in date</mat-label>
-            <input
-              matInput
-              [min]="minDate"
-              [(ngModel)]="checkinDate"
-              [matDatepicker]="picker"
-              [matDatepickerFilter]="myHolidayFilter"
-              (dateChange)="trialM($event)"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field
-            appearance="fill"
-            (click)="picker2.open()"
-            class="removeOnScreen425"
-          >
-            <mat-label>Check out date</mat-label>
-            <input
-              matInput
-              [min]="checkoutDate"
-              [(ngModel)]="minDateForCheckOut"
-              [matDatepicker]="picker2"
-              [matDatepickerFilter]="myHolidayFilter"
-              (dateChange)="trialM($event)"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker2"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
-        </div>
+        <h4 style="font-weight: 600">
+          <span style="color: #ff0066">HM</span>Cover
+        </h4>
+        Every booking includes free protection from Host cancellations, listing
+        inaccuracies, and other issues like trouble checking in.
       </div>
     </div>
     <div class="col-md-4">
@@ -173,43 +139,38 @@
 
         <div class="guest_counter">
           <p class="guests_label">Guests</p>
-          <span (click)="decrement()"
-            ><img
-              [ngClass]="{
-                minGuestReached: counter === 1
-              }"
-              style="
-                width: 30px;
-                height: 30px;
-                margin-left: 10px;
-                cursor: pointer;
-              "
-              src="../../../assets/svg/minus.svg"
-              alt=""
-          /></span>
 
-          <div
-            style="display: inline-block; text-align: center"
-            class="counter_number_div"
-          >
-            <span class="guest_number" style="font-size: 20px">{{
-              counter
-            }}</span>
-          </div>
-          <span class="float-end" (click)="increment()"
-            ><img
-              [ngClass]="{
-                maxGuestReached: counter === shortletData.maxNoOfGuests
-              }"
-              style="
-                width: 30px;
-                height: 30px;
-                margin-right: 10px;
-                cursor: pointer;
-              "
-              src="../../../assets/svg/add.svg"
-              alt=""
-          /></span>
+          <h5 style="text-align: center">
+            <span class="float-start" (click)="decrement()"
+              ><img
+                [ngClass]="{
+                  minGuestReached: counter === 1
+                }"
+                style="
+                  width: 30px;
+                  height: 30px;
+                  margin-left: 5px;
+                  cursor: pointer;
+                "
+                src="../../../assets/svg/minus.svg"
+                alt=""
+            /></span>
+            {{ counter
+            }}<span class="float-end" (click)="increment()"
+              ><img
+                [ngClass]="{
+                  maxGuestReached: counter === shortletData.maxNoOfGuests
+                }"
+                style="
+                  width: 30px;
+                  height: 30px;
+                  margin-right: 5px;
+                  cursor: pointer;
+                "
+                src="../../../assets/svg/add.svg"
+                alt=""
+            /></span>
+          </h5>
         </div>
 
         <!-- if check in date and checkout dates are picked, display this -->
@@ -239,7 +200,9 @@
               checkin: checkinDate,
               checkout: minDateForCheckOut,
               nights: numberOfNights,
-              guests: counter
+              guests: counter,
+              service: shortletData.serviceFee,
+              cleaning: shortletData.cleaningFee
             }"
           >
             {{ buttonDisable ? "Not Available" : "Reserve" }}

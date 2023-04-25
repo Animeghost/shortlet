@@ -1,36 +1,208 @@
-.form {
-    display: flex;
-    justify-content: center;
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.input-wrapper {
-    position: relative;
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.login {
+  margin-top: 2rem;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.checkbox-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
+.control {
+  margin-top: 2rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: #f1317e;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f1317e;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#button-2.slide {
+  transition: all 0.2s ease-in-out;
+}
+
+#button-2.slide:hover {
+  transform: scale(1.05);
+}
+/*   
+  .amenities {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
   }
   
-  input {
-    border: 1px solid gray;
-    /* border-radius: 6px; */
-    position: relative;
-    width: 300px;
-    margin: 10px;
-    line-height: 6ex;
-    padding-left: 0.5rem;
+  .amenities > div {
+    flex-basis: 45%;
+    margin-bottom: 10px;
   }
   
-  /* label {
-    position: absolute;
-    top: 0.2ex;
-    z-index: 1;
-    left: 1em;
-    background-color: white;
-    padding: 0 5px;
+  .amenities label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .amenities input[type="checkbox"] {
+    margin-right: 5px;
+  }
+   */
+
+.amenities {
+  display: flex;
+  gap: 2rem;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.amenities label {
+  padding-left: 0.5rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.amenity {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+/* .amenities input[type="checkbox"] {
+    display: none;
   } */
 
-  button {
-    border: none;
-    border-radius: 13px;
-    padding: 0.5rem 3.5rem;
-    background-color: blue;
-    color: #ffffff;
-    /* margin: 0rem 5rem; */
-  }
+/* .amenities label:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    vertical-align: middle;
+  } */
+
+/* .amenities input[type="checkbox"]:checked + label:before {
+    content: '\2713';
+    color: #fff;
+    background-color: #f1317e;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 20px;
+  } */
+
+/* progress bar */
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+  margin-bottom: 20px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #f1317e;
+  transition: width 0.3s ease-in-out;
+}
+
+.file-icon {
+  width: 4.8rem;
+  /* margin-left: -24px;
+  margin-top: -2px;
+  position: absolute; */
+}
+
+.selected-file {
+  display: flex;
+  text-align: center;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  margin-left: 2rem;
+  font-size: 12px;
+  background-color: #fff;
+  padding: 8px;
+  color: #bbb;
+  cursor: pointer;
+  gap: 1rem;
+}

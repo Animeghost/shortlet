@@ -11,31 +11,48 @@ import { NewShortletComponent } from './components/new-shortlet/new-shortlet.com
 import { RegisterShortletComponent } from './components/new-shortlet/register-shortlet/register-shortlet.component';
 import { BookingComponent } from './components/shortlet/booking/booking.component';
 import { ShortletComponent } from './components/shortlet/shortlet.component';
-import { TripsComponent } from './components/trips/trips.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ListingComponent } from './components/new-shortlet/listing/listing.component';
 import { AdminComponent } from './components/admin/admin.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['']);
 
 const routes: Routes = [
-  // { path: '', redirectTo: '', pathMatch: 'full' },
-  { path: '', component: HomeComponent },
-  { path: 'shortlet/:id/booking', component: BookingComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
-    path: 'shortlet/:id',
-    component: ShortletComponent,
-    children: [
-      // { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      // { path: 'shortlet/:id/booking', component: BookingComponent },
-    ],
+    path: 'home',
+    loadChildren: () =>
+      import('./components/home/home.module').then((m) => m.HomeModule),
   },
+  {
+    path: 'trips',
+    loadChildren: () =>
+      import('./components/trips/trips.module').then((m) => m.TripsModule),
+  },
+
+  {
+    path: 'shortlet',
+    loadChildren: () =>
+      import('./components/shortlet/shortlet-module.module').then(
+        (m) => m.ShortletModule
+      ),
+  },
+  // { path: 'shortlet/:id/booking', component: BookingComponent },
+  // {
+  //   path: 'shortlet/:id',
+  //   component: ShortletComponent,
+  // },
+
   {
     path: 'profile',
-    component: ProfileComponent,
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    loadChildren: () =>
+      import('./components/profile/profile.module').then(
+        (m) => m.ProfileModule
+      ),
   },
+
+  //mogen will handle this
   {
     path: 'host/shortlets',
     component: NewShortletComponent,
@@ -43,15 +60,29 @@ const routes: Routes = [
   {
     path: 'host/shortlets/new',
     component: RegisterShortletComponent,
-  },
-  {
-    path: 'trips',
-    component: TripsComponent,
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
-  { path: 'admin', component: AdminComponent },
-  { path: 'not-found', component: NotFoundComponent },
+  {
+    path: 'user-listings',
+    component: ListingComponent,
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
+  },
+  //mogen will handle this
+
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./components/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'not-found',
+    loadChildren: () =>
+      import('./components/not-found/not-found.module').then(
+        (m) => m.NotFoundModule
+      ),
+  },
   { path: '**', redirectTo: '/not-found' },
 ];
 

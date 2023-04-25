@@ -2,7 +2,7 @@
   <div
     class="property"
     *ngFor="let property of filterbar; let i = index"
-    [ngClass]="{ ifSelected: property.name === toggleActiveApartment }"
+    [ngClass]="{ ifSelected: property.value === toggleActiveApartment }"
   >
     <div class="test" (click)="getProperty(property.value)">
       <img [src]="property.image" [alt]="property.name" />

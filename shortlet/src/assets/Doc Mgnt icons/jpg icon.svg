@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="448" height="512" viewBox="0 0 448 512">
+  <g id="jpg_icon" data-name="jpg icon" transform="translate(-32)">
+    <path id="Path_101" data-name="Path 101" d="M128,0A32.094,32.094,0,0,0,96,32V480a32.094,32.094,0,0,0,32,32H448a32.094,32.094,0,0,0,32-32V128L352,0Z" fill="#e2e5e7"/>
+    <path id="Path_102" data-name="Path 102" d="M384,128h96L352,0V96A32.094,32.094,0,0,0,384,128Z" fill="#b0b7bd"/>
+    <path id="Path_103" data-name="Path 103" d="M480,224l-96-96h96Z" fill="#cad1d8"/>
+    <path id="Path_104" data-name="Path 104" d="M416,416a16.047,16.047,0,0,1-16,16H48a16.047,16.047,0,0,1-16-16V256a16.047,16.047,0,0,1,16-16H400a16.047,16.047,0,0,1,16,16Z" fill="#9f0c0c"/>
+    <path id="Path_108" data-name="Path 108" d="M400,432H96v16H400a16.047,16.047,0,0,0,16-16V416A16.047,16.047,0,0,1,400,432Z" fill="#cad1d8"/>
+    <text id="JPG" transform="translate(107 385)" fill="#fff" font-size="128" font-family="Raleway-SemiBold, Raleway" font-weight="600"><tspan x="0" y="0">JPG</tspan></text>
+  </g>
+</svg>
