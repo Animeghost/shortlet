@@ -24,6 +24,7 @@ import static java.lang.Math.log;
 @RestController
 @Slf4j
 @CrossOrigin
+@RequestMapping("/api/")
 public class ReviewController {
     private final ReviewRepository reviewRepository;
     private final CommentRepository commentRepository;

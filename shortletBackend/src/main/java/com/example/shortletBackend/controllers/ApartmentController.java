@@ -3,7 +3,9 @@ package com.example.shortletBackend.controllers;
 import com.example.shortletBackend.dto.ApartmentsDTO;
 import com.example.shortletBackend.dto.PlainApartmentDTO;
 import com.example.shortletBackend.dto.TextResponse;
-import com.example.shortletBackend.entities.*;
+import com.example.shortletBackend.entities.Apartments;
+import com.example.shortletBackend.entities.Pictures;
+import com.example.shortletBackend.entities.Users;
 import com.example.shortletBackend.enums.HomeState;
 import com.example.shortletBackend.enums.PropertyType;
 import com.example.shortletBackend.enums.Role;
@@ -20,15 +22,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin
 @AllArgsConstructor
+@RequestMapping("/api/")
 public class ApartmentController {
     private final ApartmentRepository apartmentRepo;
     private final PicturesRepository picRepo;

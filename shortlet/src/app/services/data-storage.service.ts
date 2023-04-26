@@ -27,12 +27,12 @@ export class DataStorageService {
   ) {}
 
   getShortlets() {
-    return this.http.get<Shortlet>('http://localhost:8080/verified_homes');
+    return this.http.get<Shortlet>('/api/verified_homes');
   }
 
   displayShortlet(id: number): Observable<Shortlet> {
     return this.http.get<Shortlet>(
-      `http://localhost:8080/home/?house_id=${id}`
+      `/api/home/?house_id=${id}`
     );
   }
 
@@ -48,7 +48,7 @@ export class DataStorageService {
     console.log(formData);
 
     return this.http.post<NewShortlet>(
-      `http://localhost:8080/addHome/`,
+      `/api/addHome/`,
       formData,
       options
     );
@@ -62,20 +62,20 @@ export class DataStorageService {
     };
 
     return this.http.get<Listings>(
-      `http://localhost:8080/user/listings/`,
+      `/api/user/listings/`,
       options
     );
   }
 
   getUser() {
-    return this.http.get('http://localhost:8080/');
+    return this.http.get('/api/');
   }
 
   updateUserInfo(
     userDetails: { name: string; phoneNo: number },
     email: string
   ) {
-    return this.http.put('http://localhost:8080/update_user/', userDetails, {
+    return this.http.put('/api/update_user/', userDetails, {
       headers: new HttpHeaders({ user_email: email }),
     });
     // console.log(userDetails);
@@ -84,7 +84,7 @@ export class DataStorageService {
   getSelectedApartment(property_type: string) {
     this.http
       .get(
-        'http://localhost:8080/verified_homes/search/?property_type=' +
+        '/api/verified_homes/search/?property_type=' +
           property_type
       )
       .subscribe((res) => {
@@ -105,7 +105,7 @@ export class DataStorageService {
     // console.log(checkin, checkout);
     this.http
       .put(
-        `http://localhost:8080/addReservation/?user_email=${email}&apartment_id=${id}`,
+        `/api/addReservation/?user_email=${email}&apartment_id=${id}`,
         {
           checkInDate: checkin,
           checkOutDate: checkout,
@@ -120,20 +120,20 @@ export class DataStorageService {
   }
 
   getAllReservations(): Observable<ReservationObj> {
-    return this.http.get<ReservationObj>('http://localhost:8080/reservation/');
+    return this.http.get<ReservationObj>('/api/reservation/');
   }
 
   getAllUsers() {
-    return this.http.get('http://localhost:8080/user');
+    return this.http.get('/api/user');
   }
 
   getAllAdmins() {
-    return this.http.get('http://localhost:8080/admin');
+    return this.http.get('/api/admin');
   }
 
   makeUserAdmin(id: number, email: string) {
     return this.http.put(
-      `http://localhost:8080/user/update/?user_id=${id}`,
+      `/api/user/update/?user_id=${id}`,
       {},
       {
         headers: new HttpHeaders({ admin_email: email }),
@@ -144,7 +144,7 @@ export class DataStorageService {
 
   revokeAdminAccess(id: number, email: string) {
     return this.http.put(
-      `http://localhost:8080/user/update/role/?user_id=${id}`,
+      `/api/user/update/role/?user_id=${id}`,
       {},
       {
         headers: new HttpHeaders({ admin_email: email }),
@@ -153,13 +153,13 @@ export class DataStorageService {
   }
 
   getAllPendingRequest() {
-    return this.http.get('http://localhost:8080/homes/PENDING?');
+    return this.http.get('/api/homes/PENDING?');
   }
 
   rejectListing(id: number, email: string) {
     // console.log(id);
     return this.http.put(
-      `http://localhost:8080/home/update/unverify?apartment_id=${id}`,
+      `/api/home/update/unverify?apartment_id=${id}`,
       {},
       {
         headers: new HttpHeaders({ user_email: email }),
@@ -169,7 +169,7 @@ export class DataStorageService {
 
   acceptListing(id: number, email: string) {
     return this.http.put(
-      `http://localhost:8080/home/update/verify?apartment_id=${id}`,
+      `/api/home/update/verify?apartment_id=${id}`,
       {},
       {
         headers: new HttpHeaders({ user_email: email }),
@@ -180,7 +180,7 @@ export class DataStorageService {
   sendComment(userComment: { comment: string }, id: number, email: string) {
     console.log(userComment, id, email);
     return this.http.post(
-      `http://localhost:8080/apartment/comment/add/?apartment_id=${id}`,
+      `/api/apartment/comment/add/?apartment_id=${id}`,
       userComment,
       {
         headers: new HttpHeaders({ user_email: email }),

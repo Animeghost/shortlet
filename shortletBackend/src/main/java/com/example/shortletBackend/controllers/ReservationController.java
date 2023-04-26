@@ -25,6 +25,7 @@ import java.util.Optional;
 @CrossOrigin
 @AllArgsConstructor
 @Slf4j
+@RequestMapping("/api/")
 public class ReservationController {
     private final ReservationRepository reservationRepo;
     private final ApartmentRepository apartmentRepo;
