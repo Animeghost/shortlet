@@ -5,6 +5,7 @@ import com.example.shortletBackend.dto.TextResponse;
 import com.example.shortletBackend.entities.Apartments;
 import com.example.shortletBackend.entities.Reservation;
 import com.example.shortletBackend.entities.Users;
+import com.example.shortletBackend.enums.PropertyType;
 import com.example.shortletBackend.enums.ReservationState;
 import com.example.shortletBackend.enums.Status;
 import com.example.shortletBackend.repositories.ApartmentRepository;
@@ -51,6 +52,11 @@ public class ReservationController {
 
     }
 
+    @GetMapping("/property_type")
+    public ResponseEntity returnAllPropertyTypes(){
+        PropertyType[] propertyTypes = PropertyType.values();
+        return ResponseEntity.ok(propertyTypes);
+    }
 
 
     @PutMapping("/reservation/state/")

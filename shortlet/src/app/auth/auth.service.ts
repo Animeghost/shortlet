@@ -102,7 +102,7 @@ export class AuthService {
     expiresIn: number
   ) {
     this.http
-      .post('http://localhost:8080/signup', {
+      .post('/api/signup', {
         name: displayName,
         email: email,
       })

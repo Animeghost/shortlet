@@ -4,52 +4,66 @@ import com.example.shortletBackend.enums.HouseType;
 import com.example.shortletBackend.enums.PropertyType;
 import com.example.shortletBackend.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
 
 import com.example.shortletBackend.enums.HomeState;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity@Getter @Setter@ToString
-@AllArgsConstructor
+@AllArgsConstructor 
+@Document(indexName = "shortlet") @Setting(settingPath = "static/es-settings.json")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Apartments {
-    @Id
+    @Id @org.springframework.data.annotation.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Field(type = FieldType.Keyword)
     @EqualsAndHashCode.Include
     private Long id;
+
+    @Field(type = FieldType.Text)
     private String name;
 
     private String address;
+    @Field(type = FieldType.Text)
     private String state;
-    @NonNull
+    @NonNull @Field(type = FieldType.Text)
     private String country;
     private String continent;
     private String houseRefCode;
     @Enumerated(EnumType.STRING)
+    @Field(type = FieldType.Text)
     private HomeState homeState;
     @Enumerated(EnumType.STRING)
     private Status status;
+    @Field(type = FieldType.Integer)
     private int price;
     private int cleaningFee;
-    private final int serviceFee = 50;
+    private int serviceFee = 50;
     private double rating;
-
+    @Field(type = FieldType.Integer)
     private int maxNoOfGuests;
+    @Field(type = FieldType.Integer)
     private int noOfBedrooms;
+    @Field(type = FieldType.Integer)
     private int noOfBeds;
+    @Field(type = FieldType.Integer)
     private int noOfBathrooms;
 
     @Enumerated(EnumType.STRING)
+    @Field(type = FieldType.Text)
     private PropertyType propertyType;
     @Enumerated(EnumType.STRING)
+    @Field(type = FieldType.Text)
     private HouseType houseType;
 
     @OneToOne
@@ -62,15 +76,15 @@ public class Apartments {
     private String description;
 
     @OneToMany(mappedBy = "apartment")//,cascade = CascadeType.ALL)
-    private Set<Reservation> reservations = new HashSet<>();
+    private List<Reservation> reservations = new ArrayList<>();
     @OneToMany//(cascade = CascadeType.ALL)
-    private Set<Pictures> pictures = new HashSet<>();
+    private List<Pictures> pictures = new ArrayList<>();
 
     @OneToMany(mappedBy = "apartments")
-    private Set<Review> reviews = new HashSet<>();
+    private List<Review> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "apartments")
-    private Set<Comments> comments = new HashSet<>();
+    private List<Comments> comments = new ArrayList<>();
 
 
     public void setHouseRefCode(String name, int id) {
@@ -80,5 +94,7 @@ public class Apartments {
     public Apartments() {
         this.status = Status.UNOCCUPIED;
     }
+
+
 
 }

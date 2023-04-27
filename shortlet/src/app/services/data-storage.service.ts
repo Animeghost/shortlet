@@ -27,12 +27,12 @@ export class DataStorageService {
   ) {}
 
   getShortlets() {
-    return this.http.get<Shortlet>('http://localhost:8080/verified_homes');
+    return this.http.get<Shortlet>('/api/verified_homes');
   }
 
   displayShortlet(id: number): Observable<Shortlet> {
     return this.http.get<Shortlet>(
-      `http://localhost:8080/home/?house_id=${id}`
+      `/api/home/?house_id=${id}`
     );
   }
 
@@ -68,7 +68,7 @@ export class DataStorageService {
   }
 
   getUser() {
-    return this.http.get('http://localhost:8080/');
+    return this.http.get('/api/');
   }
 
   updateUserInfo(

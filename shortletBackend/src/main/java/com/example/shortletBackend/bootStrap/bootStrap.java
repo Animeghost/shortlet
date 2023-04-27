@@ -1,5 +1,6 @@
 package com.example.shortletBackend.bootStrap;
 
+import com.example.shortletBackend.elasticRepo.ApartmentElasticRepo;
 import com.example.shortletBackend.entities.*;
 import com.example.shortletBackend.enums.*;
 import com.example.shortletBackend.repositories.*;
@@ -21,6 +22,7 @@ public class bootStrap implements CommandLineRunner {
     private final ReservationRepository reservationRepo;
     private final AmenitiesRepository amenitiesRepository;
     private final CommentRepository commentRepository;
+    private final ApartmentElasticRepo apartmentElasticRepo;
 
     @Override
     public void run(String... args) throws Exception {
@@ -35,9 +37,10 @@ public class bootStrap implements CommandLineRunner {
         Users isak = new Users("Isak Lennert","isak@gmail.com",Role.USER);
         Users peter = new Users("Ladenika Peter","peterladenika@gmail.com",Role.ADMIN);
         Users mogena = new Users("Mogena", "abdulai1398@student.babcock.edu.ng",Role.ADMIN);
+        Users ghost = new Users("Ghost","ghostpythoncode@gmail.com",Role.ADMIN);
         
 
-        userRepository.saveAll(new ArrayList<>(Arrays.asList(walter,Admin,kathy,samy,melisa,emily,olu,chi,isak,peter,mogena)));
+        userRepository.saveAll(new ArrayList<>(Arrays.asList(walter,Admin,kathy,samy,melisa,emily,olu,chi,isak,peter,mogena,ghost)));
 
         Apartments firstHouse = new Apartments();
         firstHouse.setAddress("Leece");
@@ -452,8 +455,6 @@ public class bootStrap implements CommandLineRunner {
         Comments comment15= new Comments(" The view is unforgettable.",new Date(2023 - 1900, Calendar.JANUARY, 15),kathy,House7);
         Comments comment16= new Comments("Just unique and amazing place to stay. ",new Date(2023 - 1900, Calendar.JANUARY, 20),walter,House7);
 
-        House7.getComments().addAll(new ArrayList<>(Arrays.asList(comment15,comment16)));
-
         Apartments House8 = new Apartments();
         House8.setAddress("Mogan");
         House8.setState("Gran Canaria");
@@ -799,22 +800,19 @@ public class bootStrap implements CommandLineRunner {
         Comments comment25= new Comments("We had a problem with wi fi and it was sorted very promptly. Would highly recommend this property",new Date(2022 - 1900, Calendar.DECEMBER, 15),melisa,House12);
         Comments comment26= new Comments("The pool and patio area with BBQ are great for spending time outdoors in the lovely weather.",new Date(2022 - 1900, Calendar.DECEMBER, 25),emily,House12);
 
-//        House12.setComments(comment26);
-//        House12.getComments().addAll();
 
-        ArrayList<Apartments> houseCollection = new ArrayList<>(Arrays.asList(new Apartments[]{firstHouse, House2,
-                House3, House4, House5, House6, House7, House8, House9, House10, House11, House12}));
-        ArrayList<Pictures> picturesCollection = new ArrayList<>(Arrays.asList(new Pictures[]{picture1, picture2, picture3, picture4,
+
+        ArrayList<Apartments> houseCollection = new ArrayList<>(Arrays.asList(firstHouse, House2,
+                House3, House4, House5, House6, House7, House8, House9, House10, House11, House12));
+        ArrayList<Pictures> picturesCollection = new ArrayList<>(Arrays.asList(picture1, picture2, picture3, picture4,
                 picture5, picture6, picture7, picture8, picture9, picture10, picture11, picture12, picture13, picture14, picture15,
                 picture16, picture17, picture18, picture19, picture20, picture21, pictures22, pictures23, pictures24, pictures25, pictures26,
                 pictures27, pictures28, pictures29, pictures30, pictures31, pictures32, pictures33, pictures34, pictures35, pictures36, pictures37,
                 pictures38, pictures39, pictures40, pictures41, pictures42, pictures43, pictures44, pictures45, pictures46, pictures47, pictures48,
                 pictures49, pictures50, pictures51, pictures52, pictures53, pictures54, pictures55, pictures56, pictures57, pictures58, pictures59,
-                pictures60}));
+                pictures60));
 
 
-//        Admin.getApartmentsSet().addAll(new ArrayList<>(Arrays.asList(new Apartments[]{firstHouse, House2, House3, House4, House5
-//                , House6, House7, House8, House9, House10, House11, House12})));
 
         Reservation reservation = new Reservation();
         reservation.setCheckInDate(new Date());//today's date(checkIn date)
@@ -829,19 +827,17 @@ public class bootStrap implements CommandLineRunner {
         ,h11,h12)));
         picturesRepository.saveAll(picturesCollection);
         userRepository.saveAll(new ArrayList<>(Arrays.asList(walter,Admin,kathy,samy,melisa,emily,olu,chi,isak)));
+
         apartmentRepo.saveAll(houseCollection);
+//        apartmentElasticRepo.save(firstHouse);
+//        apartmentElasticRepo.saveAll(new ArrayList<>(Arrays.asList(firstHouse, House2,
+//                House3,House4,House5,House6)));
+        apartmentElasticRepo.saveAll(houseCollection);
         commentRepository.saveAll(new ArrayList<>(Arrays.asList(comment1,comment2,comment3,comment4
                 ,comment5,comment6,comment7,comment8,comment9,comment10,comment11,comment12,comment13,comment14
                 ,comment15,comment16,comment17,comment18,comment19,comment20,comment21,comment22,comment23,comment24
                 ,comment25,comment26)));
         reservationRepo.save(reservation);
-
-
-
-        System.out.println("house..........." + House2);
-        System.out.println("user ......." + Admin);
-        System.out.println("reservation........" + reservation);
-
 
     }
 }

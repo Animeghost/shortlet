@@ -3,6 +3,7 @@ package com.example.shortletBackend.controllers;
 import com.example.shortletBackend.dto.ApartmentsDTO;
 import com.example.shortletBackend.dto.PlainApartmentDTO;
 import com.example.shortletBackend.dto.TextResponse;
+import com.example.shortletBackend.elasticRepo.ApartmentElasticRepo;
 import com.example.shortletBackend.entities.Apartments;
 import com.example.shortletBackend.entities.Pictures;
 import com.example.shortletBackend.entities.Users;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -38,7 +40,36 @@ public class ApartmentController {
     private final ModelMapper mapper;
     private final TextResponse customResponse;
     private final MailService mailService;
+    private final ApartmentElasticRepo apartmentElasticRepo;
 
+//    query for all fields
+
+    @GetMapping("/query/")
+    public ResponseEntity apartmentQuery(@RequestParam(required = false)Map<String,String> qparam) {
+        try {
+
+
+            String mapAsString = qparam.keySet().stream()
+                    .map(key -> key + ":" + qparam.get(key))
+                    .collect(Collectors.joining(" AND ", "(", ")"));
+            qparam.forEach((a, b) -> System.out.println(String.format("%s:%s", a, b)));
+
+            ArrayList<ApartmentsDTO> hotelList = new ArrayList<>();
+            for (Apartments hotel: apartmentElasticRepo.findBySearchOnAllFields(mapAsString)
+                 ) {
+                System.out.println(hotel);
+                hotelList.add(mapper.map(hotel,ApartmentsDTO.class));
+            }
+            return ResponseEntity.ok(hotelList);
+//            return apartmentElasticRepo.findBySearchOnAllFields(mapAsString);
+
+
+        }catch (Exception e) {
+
+           return getAllVerifiedHomes();
+        }
+
+    }
     //get all homes
     @GetMapping("/homes")
     public ResponseEntity getAllHomes(){
@@ -197,6 +228,8 @@ public class ApartmentController {
 
 
     }
+
+
 
 
 }
