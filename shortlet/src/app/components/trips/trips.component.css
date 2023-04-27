@@ -118,6 +118,7 @@ mat-paginator {
 
 ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: #eaeaea;
+  border: none;
 }
 
 ::ng-deep

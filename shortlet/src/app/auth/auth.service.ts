@@ -90,7 +90,7 @@ export class AuthService {
       const expirationDuration =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
-      this.autoLogOut(expirationDuration);
+      // this.autoLogOut(expirationDuration);
     }
   }
 
@@ -120,7 +120,7 @@ export class AuthService {
       expirationDate
     );
     this.user.next(user);
-    this.autoLogOut(expiresIn * 1000);
+    // this.autoLogOut(expiresIn * 1000);
     localStorage.setItem('shortletUserData', JSON.stringify(user));
   }
 
@@ -138,10 +138,10 @@ export class AuthService {
     });
   }
 
-  autoLogOut(expirationDuration: number) {
-    // console.log(expirationDuration);
-    this.expirationTimer = setTimeout(() => {
-      this.logOut();
-    }, expirationDuration);
-  }
+  // autoLogOut(expirationDuration: number) {
+  //   // console.log(expirationDuration);
+  //   this.expirationTimer = setTimeout(() => {
+  //     this.logOut();
+  //   }, expirationDuration);
+  // }
 }

@@ -97,7 +97,9 @@
           <label>House Type</label>
           <select formControlName="houseType" required>
             <option value="" disabled selected>Select your House Type</option>
-            <option value="" *ngFor="let house of houseType" [value]="house">{{ house }}</option>
+            <option value="" *ngFor="let house of houseType" [value]="house">
+              {{ house }}
+            </option>
           </select>
         </div>
 
@@ -107,7 +109,6 @@
             <option value="" disabled selected>
               Select your Property Type
             </option>
-            <option value=""></option>
             <option value="HOTEL">Hotel</option>
             <option value="GUESTHOUSE">GuestHouse</option>
             <option value="CAMPER">Camper</option>

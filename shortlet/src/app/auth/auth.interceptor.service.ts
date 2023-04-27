@@ -10,10 +10,7 @@ import { Observable } from 'rxjs';
 
 export class AuthServiceInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (
-      req.url === '/api/' ||
-      req.url === 'http://localhost:8080/reservation/'
-    ) {
+    if (req.url === '/api/' || req.url === '/api/reservation/') {
       console.log('here');
       const user = JSON.parse(localStorage.getItem('shortletUserData'));
       const user_email = user.email;
