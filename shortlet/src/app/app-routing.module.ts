@@ -52,10 +52,13 @@ const routes: Routes = [
       ),
   },
 
-  //mogen will handle this
+
   {
     path: 'host/shortlets',
-    component: NewShortletComponent,
+    loadChildren: () =>
+      import('./components/new-shortlet/new-shortlet.module').then(
+        (m) => m.NewShortletModule
+      ),
   },
   {
     path: 'host/shortlets/new',

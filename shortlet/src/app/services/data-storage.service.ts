@@ -226,4 +226,8 @@ export class DataStorageService {
   getCountry() {
     return this.http.get<any[]>('https://restcountries.com/v2/all');
   }
+
+  getAllHouseTypes() {
+    return this.http.get<any[]>('http://localhost:8080/property_type');
+  }
 }

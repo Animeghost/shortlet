@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef} from '@angular/core';
 import { User } from 'src/app/Model/user.model';
 import {
   NgForm,
@@ -45,6 +45,7 @@ export class RegisterShortletComponent {
   countries: any[] = [];
 
   allowedMimeType: any[] = ['image/png', 'image/jpeg', 'image/jpg'];
+  houseType: string[] = [];
 
   constructor(
     // private sanitizer: DomSanitizer,
@@ -84,6 +85,9 @@ export class RegisterShortletComponent {
       pictures: new FormArray([]),
     });
 
+    // this.setPictureFormArray();
+    // this.addPicture();
+
     // get countries list - step 3
     this.dataStorage.getCountry().subscribe((response) => {
       this.countries = response.map((country) => {
@@ -100,7 +104,14 @@ export class RegisterShortletComponent {
         // console.log(this.username);
       }
     });
+
+    this.dataStorage.getAllHouseTypes().subscribe((response) => {
+      this.houseType = response
+      console.log(this.houseType);
+    })
   }
+
+  
 
   googleAuth() {
     this.authS.loginWithGoogle();
@@ -192,7 +203,7 @@ export class RegisterShortletComponent {
           console.log((this.newShortlet = response));
           // function to return all users, show error if usernot registered to be implemented
         },
-        (error) => console.log(error)
+        (error) => this.notification.errorMessage(error.message)
       );
       this.notification.successMessage('You have successfully added a home');
 

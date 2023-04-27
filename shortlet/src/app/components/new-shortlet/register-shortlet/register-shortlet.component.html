@@ -97,9 +97,7 @@
           <label>House Type</label>
           <select formControlName="houseType" required>
             <option value="" disabled selected>Select your House Type</option>
-            <option value="PRIVATE_ROOM">Private Room</option>
-            <option value="WHOLE_HOUSE">Whole House</option>
-            <option value="SHARED_ROOM">Shared Room</option>
+            <option value="" *ngFor="let house of houseType" [value]="house">{{ house }}</option>
           </select>
         </div>
 
@@ -109,6 +107,7 @@
             <option value="" disabled selected>
               Select your Property Type
             </option>
+            <option value=""></option>
             <option value="HOTEL">Hotel</option>
             <option value="GUESTHOUSE">GuestHouse</option>
             <option value="CAMPER">Camper</option>
@@ -274,18 +273,3 @@
     </form>
   </div>
 </div>
-
-<!-- <div class="container" *ngIf="!username">
-  <div class="login">
-    <h5>Log in or sign up to add your home</h5>
-    <button class="social_button w-100" (click)="googleAuth()">
-      Continue with
-      <span>
-        <span id="g">G</span> <span id="o_first">o</span>
-        <span id="o_second">o</span> <span id="g_second">g</span>
-        <span id="l">l</span> <span id="e">e</span>
-      </span>
-    </button>
-    google logo
-  </div>
-</div> -->

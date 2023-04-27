@@ -193,7 +193,7 @@ button:disabled {
   position: absolute; */
 }
 
-.selected-file {
+/* .selected-file {
   display: flex;
   text-align: center;
   border: 1px solid #bbb;
@@ -205,4 +205,30 @@ button:disabled {
   color: #bbb;
   cursor: pointer;
   gap: 1rem;
+} */
+
+.selected-file {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  margin: 1rem auto;
+  font-size: 12px;
+  background-color: #fff;
+  padding: 8px;
+  color: #bbb;
+  cursor: pointer;
+  gap: 1rem;
+  max-width: 100%;
 }
+
+.selected-file img {
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+

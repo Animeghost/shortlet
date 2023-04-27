@@ -8,6 +8,7 @@ import { Listings } from 'src/app/interface/shortlet';
 import { User } from 'src/app/Model/user.model';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { UserData } from '../../admin/admin.component';
+import { NotificationService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-listing',
@@ -35,7 +36,8 @@ export class ListingComponent {
 
   constructor(
     private dataStorage: DataStorageService,
-    private authS: AuthService
+    private authS: AuthService,
+    private notification: NotificationService,
   ) {}
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class ListingComponent {
 
         // function to return all users, show error if usernot registered to be implemented
       },
-      (error) => console.log(error)
+      (error) => this.notification.errorMessage(error.message)
     );
   }
 

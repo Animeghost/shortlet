@@ -11,6 +11,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewShortletRoutingModule } from './new-shortlet-routing.module';
 
 @NgModule({
     declarations:[ListingComponent, RegisterShortletComponent, NewShortletComponent],
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         MatTableModule,
         MatInputModule,
         MatFormFieldModule,
+        NewShortletRoutingModule
     ],
     exports:[ListingComponent, RegisterShortletComponent, NewShortletComponent]
 })
