@@ -19,6 +19,11 @@ export class ShortletComponent implements OnInit {
   apartmentID: number;
   checkinDate: Date;
   checkoutDate: Date;
+  today: Date;
+  minDate = new Date();
+  trial = new Date();
+  twodayAhead = this.trial.setDate(this.trial.getDate() + 2);
+  minDateForCheckOut = new Date(this.twodayAhead);
 
   numberOfNights: number;
   shortletData: Partial<Shortlet> = {};
@@ -27,8 +32,6 @@ export class ShortletComponent implements OnInit {
   showAmenities: boolean = false;
   maxNoOfGuests: number;
 
-  today: Date;
-
   calculateNumberOfNights: number;
   total: number;
   amenities: any = [];
@@ -36,11 +39,6 @@ export class ShortletComponent implements OnInit {
   counter: number = 1;
   serviceFee: number;
   cleaningFee: number;
-
-  minDate = new Date();
-  trial = new Date();
-  twodayAhead = this.trial.setDate(this.trial.getDate() + 2);
-  minDateForCheckOut = new Date(this.twodayAhead);
 
   buttonDisable: boolean;
 
@@ -84,12 +82,12 @@ export class ShortletComponent implements OnInit {
     });
   }
 
-  //to diplay hortlet
+  //to display shortlet
   displayShortlet(id: number) {
     this.showShortlet = false;
     this.dataStorage.displayShortlet(id).subscribe(
       (response) => {
-        console.log(response);
+        // console.log(response);
         // console.log((this.shortletData = response));
         this.shortletData = response;
         this.overallArray = response.reservations;
@@ -127,7 +125,6 @@ export class ShortletComponent implements OnInit {
   }
 
   fetchDateSelected() {
-    // console.log('enter');
     let timeDiff = Math.abs(
       this.minDateForCheckOut.getTime() - this.checkinDate.getTime()
     );
@@ -158,10 +155,6 @@ export class ShortletComponent implements OnInit {
   }
 
   checkdateInbetween(checkInDate, checkOutDate) {
-    // console.log(new Date('2023-03-20'));
-    // let testCheck1 = new Date('2023-03-20');
-    // let testCheck2 = new Date('2023-03-22');
-
     let testCheck1 = new Date(checkInDate);
     let testCheck2 = new Date(checkOutDate);
 
@@ -171,7 +164,7 @@ export class ShortletComponent implements OnInit {
       dates.push(new Date(date).toLocaleDateString());
       date.setDate(date.getDate() + 1);
     }
-    console.log(dates);
+    // console.log(dates);
     for (let date1 of dates) {
       this.myHolidayDates.push(new Date(date1));
       this.mynewArray.push(new Date(date1));
@@ -182,14 +175,9 @@ export class ShortletComponent implements OnInit {
     //this will disable reserve date if both the current day and two days ahead are already reserved
     const checkIn = this.dateConverter(this.checkinDate);
     const checkOut = this.dateConverter(this.minDateForCheckOut);
-    // console.log(checkIn);
+    // console.log(this.mynewArray);
+    // console.log(new Date(checkIn));
     // console.log(checkOut);
-    // console.log(this.myHolidayDates);
-    // const testArray: Array<Date> = [...this.myHolidayDates];
-
-    console.log(this.mynewArray);
-    console.log(new Date(checkIn));
-    console.log(checkOut);
 
     for (let date of this.mynewArray) {
       const newDate = this.dateConverter(date);
@@ -206,21 +194,6 @@ export class ShortletComponent implements OnInit {
       console.log('it is not');
       this.buttonDisable = false;
     }
-
-    // for (let date of this.mynewArray) {
-    //   const newDate = this.dateConverter(date);
-    //   console.log(newDate);
-    //   if (
-    //     new Date(newDate).getTime() === new Date(checkIn).getTime() ||
-    //     new Date(newDate).getTime() === new Date(checkOut).getTime()
-    //   ) {
-    //     console.log(true);
-    //     this.buttonDisable = true;
-    //   } else {
-    //     console.log(false);
-    //     this.buttonDisable = false;
-    //   }
-    // }
   }
 
   myHolidayFilter = (d: Date): boolean => {
@@ -271,7 +244,6 @@ export class ShortletComponent implements OnInit {
   descriptionLimit = 200;
 
   // ...
-
   toggleDescription() {
     this.showFullDescription = !this.showFullDescription;
   }

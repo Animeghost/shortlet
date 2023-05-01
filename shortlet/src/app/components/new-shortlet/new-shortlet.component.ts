@@ -6,9 +6,13 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './new-shortlet.component.html',
   styleUrls: ['./new-shortlet.component.css'],
 })
+
 export class NewShortletComponent {
+
   constructor(private authS: AuthService) {}
+
   isUserAuth: any;
+
   ngOnInit() {
     this.authS.user.subscribe((user) => {
       this.isUserAuth = user;

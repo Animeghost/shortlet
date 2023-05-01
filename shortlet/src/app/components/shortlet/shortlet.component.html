@@ -84,7 +84,7 @@
     <div class="col-md-4">
       <div class="reservation">
         <div style="display: flex; justify-content: space-between">
-          <p>₦{{ shortletData.price }} per night</p>
+          <p>₦{{ shortletData.price | number:'1.0':'en-US' }} per night</p>
           <div style="display: flex; gap: 0.1rem">
             <p>★ {{ shortletData.rating }}</p>
           </div>
@@ -175,22 +175,22 @@
 
         <!-- if check in date and checkout dates are picked, display this -->
         <div class="bill">
-          <p>₦{{ shortletData.price }} x {{ numberOfNights }} nights</p>
+          <p>₦{{ shortletData.price | number:'1.0':'en-US' }} x {{ numberOfNights }} nights</p>
           <!-- <p>${{ shortletData.price * numberOfNights }}</p> -->
-          <p>₦{{ calculateNumberOfNights }}</p>
+          <p>₦{{ calculateNumberOfNights | number:'1.0':'en-US' }}</p>
         </div>
         <div class="bill">
           <p>Cleaning fee</p>
-          <p>₦{{ shortletData.cleaningFee }}</p>
+          <p>₦{{ shortletData.cleaningFee | number:'1.0':'en-US' }}</p>
         </div>
         <div class="bill">
           <p>HMS Service fee</p>
-          <p>₦{{ shortletData.serviceFee }}</p>
+          <p>₦{{ shortletData.serviceFee | number:'1.0':'en-US' }}</p>
         </div>
         <hr />
         <div class="bill">
           <p>Total before taxes</p>
-          <p>₦ {{ total }}</p>
+          <p>₦ {{ total | number:'1.0':'en-US' }}</p>
         </div>
         <div class="reserve-btn">
           <button

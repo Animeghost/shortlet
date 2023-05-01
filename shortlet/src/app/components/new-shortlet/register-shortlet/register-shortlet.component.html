@@ -109,10 +109,13 @@
             <option value="" disabled selected>
               Select your Property Type
             </option>
-            <option value="HOTEL">Hotel</option>
-            <option value="GUESTHOUSE">GuestHouse</option>
-            <option value="CAMPER">Camper</option>
-            <option value="HOUSE">House</option>
+            <option
+              value=""
+              *ngFor="let property of propertyType"
+              [value]="property"
+            >
+              {{ property }}
+            </option>
           </select>
         </div>
 

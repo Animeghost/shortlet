@@ -10,8 +10,6 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from 'src/app/auth/auth.service';
 
-// import { HttpClient } from '@angular/common/http'; // step 1
-
 import { NewShortlet, amenities } from 'src/app/interface/shortlet';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { NotificationService } from 'src/app/services/notifications.service';
@@ -35,9 +33,7 @@ export class RegisterShortletComponent {
   user_email: string;
 
   myForm: FormGroup;
-  // picture: File;
-  // pictures: FormArray;
-  // base64Pictures: any = [];
+
   @ViewChild('shortletFile', /* TODO: add static flag */ { read: ElementRef })
   shortletFile: ElementRef;
   shortletDocumentFile: Array<any> = new Array();
@@ -46,6 +42,7 @@ export class RegisterShortletComponent {
 
   allowedMimeType: any[] = ['image/png', 'image/jpeg', 'image/jpg'];
   houseType: string[] = [];
+  propertyType: string[] = [];
 
   constructor(
     // private sanitizer: DomSanitizer,
@@ -85,10 +82,7 @@ export class RegisterShortletComponent {
       pictures: new FormArray([]),
     });
 
-    // this.setPictureFormArray();
-    // this.addPicture();
-
-    // get countries list - step 3
+    // get countries list
     this.dataStorage.getCountry().subscribe((response) => {
       this.countries = response.map((country) => {
         return { name: country.name, code: country.alpha2Code };
@@ -101,9 +95,14 @@ export class RegisterShortletComponent {
       if (user) {
         this.username = user.displayName;
         this.user_email = user.email;
-        // console.log(this.username);
       }
     });
+
+    //api call to get all house types
+    this.dataStorage.getAllPropertyTypes().subscribe((response) => {
+      this.propertyType = response
+      // console.log(this.propertyType);
+    })
 
     this.dataStorage.getAllHouseTypes().subscribe((response) => {
       this.houseType = response
@@ -111,28 +110,32 @@ export class RegisterShortletComponent {
     })
   }
 
-  
-
+  //google authentication
   googleAuth() {
     this.authS.loginWithGoogle();
   }
 
+  //remove uploaded image
   removeFile(i) {
     this.shortletDocumentFile.splice(i, 1);
   }
 
+  //calls the file input when image is uploaded
   onFileSelect(event) {
     this.onImageUpload(event.target.files[0]);
   }
 
+  //next function for multi-step form
   next() {
     this.step = this.step + 1;
   }
 
+  //previous function for multi-step form
   previous() {
     this.step = this.step - 1;
   }
 
+  //restricts input to only numeric values
   keyPress(event: any) {
     const pattern = /[0-9\ ]/;
 
@@ -147,6 +150,7 @@ export class RegisterShortletComponent {
     this.shortletFile.nativeElement.reset();
   }
 
+  //converts image to  base64 and adds to the shortlet document file array
   onImageUpload(fileDetail) {
     let file: File = fileDetail;
 
@@ -180,6 +184,7 @@ export class RegisterShortletComponent {
     }
   }
 
+  
   getFileType(type) {
     if (type.includes('png') || type.includes('jpg') || type.includes('jpeg')) {
       return 'jpg';
@@ -200,7 +205,7 @@ export class RegisterShortletComponent {
       // api service called
       this.dataStorage.registerNewShortlet(formData, this.user_email).subscribe(
         (response) => {
-          console.log((this.newShortlet = response));
+          // console.log((this.newShortlet = response));
           // function to return all users, show error if usernot registered to be implemented
         },
         (error) => this.notification.errorMessage(error.message)
