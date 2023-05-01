@@ -46,12 +46,11 @@ public class ApartmentController {
             String mapAsString = qparam.keySet().stream()
                     .map(key -> key + ":" + qparam.get(key))
                     .collect(Collectors.joining(" AND ", "(", ")"));
-            qparam.forEach((a, b) -> System.out.println(String.format("%s:%s", a, b)));
+//            qparam.forEach((a, b) -> System.out.println(String.format("%s:%s", a, b)));
 
             ArrayList<ApartmentsDTO> hotelList = new ArrayList<>();
             for (Apartments hotel: apartmentElasticRepo.findBySearchOnAllFields(mapAsString)
                  ) {
-                System.out.println(hotel);
                 hotelList.add(mapper.map(hotel,ApartmentsDTO.class));
             }
             return ResponseEntity.ok(hotelList);
@@ -233,6 +232,11 @@ public class ApartmentController {
 
 
     }
+
+//    @DeleteMapping("/delete")
+//    public ResponseEntity deleteApartments(){
+////        apartmentRepo
+//    }
 
 
 

@@ -2,7 +2,25 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:mysql://localhost:3306/shortlet
+    username: root
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+#    properties:
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-source: metadata
+#            scripts:
+#              action: create
+#              create-target: shortlet.sql
+
+
   mail:
     host: smtp.gmail.com
     port: 465
@@ -22,6 +40,7 @@ spring:
         transport:
           protocol: smtp
     protocol: smtp
+
 
 paystack:
   secret_key: ${paystackKey}
