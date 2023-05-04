@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
+  notifications: any;
   constructor(private toastr: ToastrService) {}
 
   successMessage(message: string) {

@@ -100,3 +100,15 @@ export interface amenities {
   wifi: boolean;
   work_space: boolean;
 }
+
+export interface UserData {
+  apartmentPicture: string;
+  apartmentId: number;
+  apartmentName: string;
+  apartmentCountry: string;
+  apartmentState: string;
+  checkInDate: Date;
+  checkOutDate: Date;
+  price: number;
+  id: number;
+}

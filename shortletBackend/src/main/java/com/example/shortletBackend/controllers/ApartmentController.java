@@ -3,12 +3,19 @@ package com.example.shortletBackend.controllers;
 import com.example.shortletBackend.dto.ApartmentsDTO;
 import com.example.shortletBackend.dto.PlainApartmentDTO;
 import com.example.shortletBackend.dto.TextResponse;
-import com.example.shortletBackend.entities.*;
-import com.example.shortletBackend.enums.*;
+import com.example.shortletBackend.entities.Apartments;
+import com.example.shortletBackend.entities.Pictures;
+import com.example.shortletBackend.entities.Users;
+import com.example.shortletBackend.enums.HomeState;
+import com.example.shortletBackend.enums.HouseType;
+import com.example.shortletBackend.enums.PropertyType;
+import com.example.shortletBackend.enums.Role;
+import com.example.shortletBackend.elasticRepo.ApartmentElasticRepo;
 import com.example.shortletBackend.repositories.AmenitiesRepository;
 import com.example.shortletBackend.repositories.ApartmentRepository;
 import com.example.shortletBackend.repositories.PicturesRepository;
 import com.example.shortletBackend.repositories.UserRepository;
+import com.example.shortletBackend.service.ApartmentService;
 import com.example.shortletBackend.service.MailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -17,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +35,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping("/api/")
 public class ApartmentController {
+    private final ApartmentService apartmentService;
     private final ApartmentRepository apartmentRepo;
     private final PicturesRepository picRepo;
     private final UserRepository userRepository;
@@ -93,16 +102,17 @@ public class ApartmentController {
     //make a house verified
     @PutMapping("/home/update/verify")
     public ResponseEntity updatePendingHouse(@RequestHeader("user_email")String email
-            , @RequestParam("apartment_id") long id){
+            , @RequestParam("apartment_id") long id) throws MessagingException {
         if (userRepository.findUsersByEmail(email).get().getRole() == Role.ADMIN){
             Optional<Apartments> updatedApartment = apartmentRepo.findById(id);
             updatedApartment.get().setHomeState(HomeState.VERIFIED);
             apartmentRepo.save(updatedApartment.get());
 
-            mailService.sendSimpleMessage(updatedApartment.get().getUsers().getEmail()
+            mailService.sendHtmlMessage(updatedApartment.get().getUsers().getEmail()
                     ,"Listing has been verified"
                     ,"Your listing with the title "+updatedApartment.get().getName()
-                            +" has been verified and user are now able to be reserved.");
+                            +" has been verified and user are now able to be reserved.",updatedApartment.get().getUsers().getName()
+            ,"/index.html");
 
             return getAllPendingHomes();
 
@@ -114,16 +124,17 @@ public class ApartmentController {
     }
     @PutMapping("/home/update/unverify")
     public ResponseEntity updateHouse(@RequestHeader("user_email")String email
-            , @RequestParam("apartment_id") long id){
+            , @RequestParam("apartment_id") long id) throws MessagingException {
         if (userRepository.findUsersByEmail(email).get().getRole() == Role.ADMIN){
             Optional<Apartments> updatedApartment = apartmentRepo.findById(id);
             updatedApartment.get().setHomeState(HomeState.UNVERIFIED);
             apartmentRepo.save(updatedApartment.get());
 
-            mailService.sendSimpleMessage(updatedApartment.get().getUsers().getEmail()
-                    ,"Listing has been verified"
+            mailService.sendHtmlMessage(updatedApartment.get().getUsers().getEmail()
+                    ,"Listing is not verified"
                     ,"Your listing with the title "+updatedApartment.get().getName()
-                            +" has been listed unverified please contact support for additional aid.");
+                            +" has been listed unverified please contact support for additional aid.",updatedApartment.get().getUsers().getName()
+                    ,"/index.html");
 
             return getAllPendingHomes();
 
@@ -205,13 +216,10 @@ public class ApartmentController {
             if (apartments.getAmenities() != null) {
                 amenitiesRepo.save(apartments.getAmenities());
             }
-            apartments.setStatus(Status.UNOCCUPIED);
-            apartments.setHomeState(HomeState.PENDING);
-            apartments.setHouseRefCode(apartments.getCountry().substring(0,2),apartmentRepo.findAll().size());
             users.get().getApartmentsSet().add(apartments);
-            apartments.setUsers(users.get());
+            apartmentService.addHome(apartments,users.get());
             userRepository.save(users.get());
-            apartmentRepo.save(apartments);
+
             return ResponseEntity.ok(apartments);
         }else {
             customResponse.setMessage("You should really signup or login else you won't" +

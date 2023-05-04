@@ -209,7 +209,7 @@ mat-label {
 
 #see-more {
   display: inline-block;
-  background-color: #ff0066;
+  background-color: #8598a7;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
@@ -222,7 +222,7 @@ mat-label {
 }
 
 .see-more:hover {
-  background-color: #ff0066;
+  background-color: rgb(167, 167, 167);
 }
 
 .send_comment {
@@ -252,7 +252,7 @@ mat-label {
     margin-top: 10px;
   }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1440px) {
   mat-form-field {
     width: 48%;
   }

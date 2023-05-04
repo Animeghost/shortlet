@@ -98,7 +98,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAlluserSub = this.dataS.getAllUsers().subscribe(
       (res) => {
-        console.log(res);
         this.users = res;
         if (this.users.length === 0) {
           this.noUsers = false;
@@ -115,7 +114,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.getAlluserSub = this.dataS.getAllAdmins().subscribe(
       (res) => {
-        console.log(res);
         this.admins = res;
         if (this.admins.length === 0) {
           this.noAdmins = false;
@@ -138,7 +136,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.pendingReqSub = this.dataS.getAllPendingRequest().subscribe(
       (res) => {
-        console.log(res);
         this.requests = res;
 
         if (this.requests.length === 0) {

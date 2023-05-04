@@ -33,10 +33,10 @@
         <div>
           <h2>Entire home hosted by {{ shortletData.users.name }}</h2>
           <div style="display: flex; gap: 0.5rem">
-            <p>{{ shortletData.maxNoOfGuests }} guests</p>
-            <p>· {{ shortletData.noOfBedrooms }} bedrooms</p>
-            <p>· {{ shortletData.noOfBeds }} beds</p>
-            <p>· {{ shortletData.noOfBathrooms }} baths</p>
+            <p>{{ shortletData.maxNoOfGuests | number:'1.0':'en-US'}} guests</p>
+            <p>· {{ shortletData.noOfBedrooms | number:'1.0':'en-US' }} bedrooms</p>
+            <p>· {{ shortletData.noOfBeds | number:'1.0':'en-US' }} beds</p>
+            <p>· {{ shortletData.noOfBathrooms | number:'1.0':'en-US'}} baths</p>
           </div>
           <hr />
 
@@ -213,7 +213,7 @@
     </div>
   </div>
   <hr />
-  <h3>Comments</h3>
+  <!-- <h3>Comments</h3>
   <div class="row">
     <div *ngFor="let comment of comments" class="col-md-6">
       <div class="user_info">
@@ -236,8 +236,8 @@
         <p style="padding-top: 6px">{{ comment.comment }}</p>
       </div>
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <!-- <div class="row">
     <div class="col-md-12">
       <div *ngIf="username" class="signedIn_user">
         <h5>{{ username }}</h5>
@@ -252,5 +252,5 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

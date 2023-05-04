@@ -86,21 +86,21 @@
           <div>
             <h4>Price details</h4>
             <div class="bill">
-              <p>₦{{ shortletData.price }} x {{ nights }} nights</p>
-              <p>₦{{ calculateNumberOfNights }}</p>
+              <p>₦{{ shortletData.price | number:'1.0':'en-US' }} x {{ nights }} nights</p>
+              <p>₦{{ calculateNumberOfNights | number:'1.0':'en-US' }}</p>
             </div>
             <div class="bill">
               <p>Cleaning fee</p>
-              <p>₦{{ cleaningFee }}</p>
+              <p>₦{{ cleaningFee | number:'1.0':'en-US' }}</p>
             </div>
             <div class="bill">
               <p>HMS Service fee</p>
-              <p>₦{{ serviceFee }}</p>
+              <p>₦{{ serviceFee | number:'1.0':'en-US' }}</p>
             </div>
             <hr />
             <div class="bill">
               <p>Total(NGN)</p>
-              <p>₦{{ total }}</p>
+              <p>₦{{ total | number:'1.0':'en-US' }}</p>
             </div>
             <button
               *ngIf="isAuthenticated"

@@ -55,20 +55,6 @@
                 alt="..."
               />
             </div>
-            <!-- <div class="carousel-item">
-              <img
-                src="https://a0.muscache.com/im/pictures/69faa681-fb85-4817-86f6-9d727c3fe9d2.jpg?im_w=720"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="https://a0.muscache.com/im/pictures/miso/Hosting-43244736/original/a7d388b9-c419-4d1f-8566-26590a847300.jpeg?im_w=1200"
-                class="d-block w-100"
-                alt="..."
-              />
-            </div> -->
           </div>
           <button
             class="carousel-control-prev"
@@ -105,10 +91,10 @@
           {{ shortlet.users.name }}
         </p>
         <p style="margin: 0; font-weight: 300; color: #6c6f71">
-          Allowed number of guests: {{ shortlet.maxNoOfGuests }}
+          Allowed number of guests: {{ shortlet.maxNoOfGuests | number:'1.0':'en-US' }}
         </p>
         <p style="margin-top: 5px; font-weight: 300">
-          <span style="font-weight: 600">₦{{ shortlet.price }}</span> per night
+          <span style="font-weight: 600">₦{{ shortlet.price | number:'1.0':'en-US' }}</span> per night
         </p>
       </div>
     </div>

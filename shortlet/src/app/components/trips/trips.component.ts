@@ -4,20 +4,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs/operators';
 import * as fromReservation from 'src/app/interface/shortlet';
+import { UserData } from 'src/app/interface/shortlet';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { NotificationService } from 'src/app/services/notifications.service';
 
-export interface UserData {
-  apartmentPicture: string;
-  apartmentId: number;
-  apartmentName: string;
-  apartmentCountry: string;
-  apartmentState: string;
-  checkInDate: Date;
-  checkOutDate: Date;
-  price: number;
-  id: number;
-}
 
 @Component({
   selector: 'app-trips',
@@ -35,11 +25,16 @@ export class TripsComponent {
     'checkInDate',
     'checkOutDate',
     'price',
+    'moreInfo'
   ];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  // moreInfo: Partial<UserData> = {};
+
+  UserData: any = {};
 
   constructor(
     private dataS: DataStorageService,
@@ -48,7 +43,7 @@ export class TripsComponent {
     this.pageDisplay = false;
     this.dataS.getAllReservations().subscribe(
       (res) => {
-        // console.log(res);
+        console.log(res);
 
         this.reservations = res;
 
@@ -77,4 +72,11 @@ export class TripsComponent {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  onSeeMore(row){
+
+    this.UserData = row;
+    console.log(this.UserData)
+  }
+
 }

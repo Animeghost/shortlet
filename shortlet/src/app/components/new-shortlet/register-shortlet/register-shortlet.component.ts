@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef} from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { User } from 'src/app/Model/user.model';
 import {
   NgForm,
@@ -43,6 +43,7 @@ export class RegisterShortletComponent {
   allowedMimeType: any[] = ['image/png', 'image/jpeg', 'image/jpg'];
   houseType: string[] = [];
   propertyType: string[] = [];
+  pendingRequestArray: any = [];
 
   constructor(
     // private sanitizer: DomSanitizer,
@@ -100,14 +101,14 @@ export class RegisterShortletComponent {
 
     //api call to get all house types
     this.dataStorage.getAllPropertyTypes().subscribe((response) => {
-      this.propertyType = response
+      this.propertyType = response;
       // console.log(this.propertyType);
-    })
+    });
 
     this.dataStorage.getAllHouseTypes().subscribe((response) => {
-      this.houseType = response
+      this.houseType = response;
       console.log(this.houseType);
-    })
+    });
   }
 
   //google authentication
@@ -184,7 +185,6 @@ export class RegisterShortletComponent {
     }
   }
 
-  
   getFileType(type) {
     if (type.includes('png') || type.includes('jpg') || type.includes('jpeg')) {
       return 'jpg';
@@ -214,6 +214,13 @@ export class RegisterShortletComponent {
 
       //timeout function that redirects back to the /user-listings of the new homes after a user successfully submits the form
       setTimeout(() => {
+        this.dataStorage.getAllPendingRequest().subscribe((res) => {
+          this.pendingRequestArray = res;
+          this.dataStorage.pendindRequestValue.next(
+            this.pendingRequestArray.length
+          );
+          console.log(this.pendingRequestArray.length);
+        });
         this.router.navigate(['/user-listings']);
       }, 3000);
     }

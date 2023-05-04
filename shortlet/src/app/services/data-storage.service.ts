@@ -18,6 +18,7 @@ export class DataStorageService {
   propertyType = new BehaviorSubject(null);
   returnAllHomes = new BehaviorSubject(null);
   notFoundPageActive = new Subject();
+  pendindRequestValue = new Subject();
   checkInDateforDB: any;
   checkOutDateforDB: any;
 

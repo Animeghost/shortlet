@@ -11,7 +11,8 @@ import com.example.shortletBackend.enums.Status;
 import com.example.shortletBackend.repositories.ApartmentRepository;
 import com.example.shortletBackend.repositories.ReservationRepository;
 import com.example.shortletBackend.repositories.UserRepository;
-import com.sun.xml.bind.v2.TODO;
+import com.example.shortletBackend.service.ApartmentService;
+import com.example.shortletBackend.service.ReservationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -28,6 +29,8 @@ import java.util.Optional;
 @Slf4j
 @RequestMapping("/api/")
 public class ReservationController {
+    private final ReservationService reservationService;
+    private final ApartmentService apartmentService;
     private final ReservationRepository reservationRepo;
     private final ApartmentRepository apartmentRepo;
     private final UserRepository userRepository;
@@ -63,8 +66,7 @@ public class ReservationController {
     public ResponseEntity changeReservationState(@RequestParam("reservation_id") long id, @RequestBody Reservation reservation) {
         Optional<Reservation> oldReservation = reservationRepo.findById(id);
         if (oldReservation != null) {
-            oldReservation.get().setReservationState(reservation.getReservationState());
-            reservationRepo.save(oldReservation.get());
+            reservationService.changeState(oldReservation.get(),oldReservation.get().getReservationState());
             return ResponseEntity.ok("Successfully changed the status to " + oldReservation.get().getReservationState());
         }
         customResponse.setMessage("This reservation does not exist");
@@ -83,8 +85,7 @@ public class ReservationController {
                 //checks if it's the host
                 (apartments.getUsers() == user.get())) {
             //checks to see if the user is the creator of the reservation or the owner of the apartment
-            reservation.get().setReservationState(ReservationState.CANCELLED);
-            reservationRepo.save(reservation.get());
+            reservationService.changeState(reservation.get(),ReservationState.CANCELLED);
             customResponse.setMessage("The reservation has been cancelled " + reservation.get());
             return ResponseEntity.ok(customResponse);
         } else {
@@ -102,10 +103,8 @@ public class ReservationController {
         Apartments apartments = reservation.get().getApartment();
 
         if (apartments != null && apartments.getUsers() == users.get()) {
-            reservation.get().setReservationState(ReservationState.STARTED);
-            apartments.setStatus(Status.OCCUPIED);
-            reservationRepo.save(reservation.get());
-            apartmentRepo.save(apartments);
+            reservationService.changeState(reservation.get(),ReservationState.STARTED);
+            apartmentService.changeStatus(apartments,Status.OCCUPIED);
             customResponse.setMessage("The trip has started and the home is now occupied");
             return ResponseEntity.ok(customResponse);
         } else {
@@ -123,10 +122,8 @@ public class ReservationController {
 
         if ((apartments != null && apartments.getUsers() == users.get()) ||
                 (reservation != null && reservation.get().getUsers() == users.get())) {
-            reservation.get().setReservationState(ReservationState.COMPLETED);
-            apartments.setStatus(Status.UNOCCUPIED);
-            reservationRepo.save(reservation.get());
-            apartmentRepo.save(apartments);
+            reservationService.changeState(reservation.get(),ReservationState.COMPLETED);
+            apartmentService.changeStatus(apartments,Status.UNOCCUPIED);
             customResponse.setMessage("The trip has ended and the home is now unoccupied");
             return ResponseEntity.ok(customResponse);
         } else {

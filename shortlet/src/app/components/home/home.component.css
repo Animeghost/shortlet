@@ -50,19 +50,32 @@ img {
   width: 7px;
 }
 
-@media only screen and (max-width: 426px) {
+/* @media only screen and (max-width: 426px) {
+  .row {
+    justify-content: center;
+  }
+} */
+
+@media only screen and (max-width: 767.98px) {
   .row {
     justify-content: center;
   }
 }
 
-@media (min-width: 767px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .row {
     margin-left: 30px;
   }
 }
 
-@media only screen and (min-width: 1399.98px) {
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .row {
+    margin-left: 3rem;
+    gap: 40px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
   .row {
     gap: 26px;
   }
