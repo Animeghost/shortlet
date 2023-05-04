@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ShortletBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <envs>
+      <env name="email" value="ghostpythoncode@gmail.com" />
+      <env name="emailPassword" value="guoepbikitnhatts" />
+      <env name="paystackKey" value="&quot;sk_test_5979e6e7cb563c31f743171f14ad25abb6ea43a4&quot;" />
+    </envs>
+    <module name="shortletBackend" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.shortletBackend.ShortletBackendApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
