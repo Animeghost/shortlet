@@ -27,7 +27,7 @@ import java.util.Optional;
 @CrossOrigin
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/api/")
+//@RequestMapping("/api/")
 public class ReservationController {
     private final ReservationService reservationService;
     private final ApartmentService apartmentService;
@@ -53,12 +53,6 @@ public class ReservationController {
         }
         return ResponseEntity.ok(reservationDTOS);
 
-    }
-
-    @GetMapping("/property_type")
-    public ResponseEntity returnAllPropertyTypes(){
-        PropertyType[] propertyTypes = PropertyType.values();
-        return ResponseEntity.ok(propertyTypes);
     }
 
 

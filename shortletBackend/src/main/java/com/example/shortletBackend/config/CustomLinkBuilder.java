@@ -1,10 +1,12 @@
 package com.example.shortletBackend.config;
 
+import org.springframework.stereotype.Component;
 import org.thymeleaf.context.IExpressionContext;
 import org.thymeleaf.context.IWebContext;
 import org.thymeleaf.linkbuilder.StandardLinkBuilder;
 import java.util.*;
 
+@Component
 public class CustomLinkBuilder extends StandardLinkBuilder {
 
 

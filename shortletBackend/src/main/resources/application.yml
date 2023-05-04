@@ -2,12 +2,12 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://localhost:3306/shortlet
-    username: root
-    password: admin
+    url: jdbc:mysql://${RDS_HOSTNAME:localhost}:${RDS_PORT:3306}/${RDS_DB_NAME:shortlet}
+    username: ${RDS_USERNAME:root}
+    password: ${RDS_PASSWORD:admin}
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
@@ -24,8 +24,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 465
-    username: ${email}
-    password: ${emailPassword}
+    username: ghostpythoncode@gmail.com
+    password: guoepbikitnhatts
     properties:
       mail:
         smtp:
@@ -43,6 +43,6 @@ spring:
 
 
 paystack:
-  secret_key: ${paystackKey}
+  secret_key: "sk_test_5979e6e7cb563c31f743171f14ad25abb6ea43a4"
 elasticsearch:
   url: localhost:9200

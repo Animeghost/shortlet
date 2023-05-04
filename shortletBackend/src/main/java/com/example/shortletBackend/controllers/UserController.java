@@ -24,7 +24,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-@RequestMapping("/api/")
+//@RequestMapping("/api/")
 public class UserController {
     private final UserRepository userRepository;
     private final ApartmentRepository apartmentRepo;

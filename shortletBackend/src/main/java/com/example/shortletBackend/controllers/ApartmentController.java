@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
-@RequestMapping("/api/")
+//@RequestMapping("/api/")
 public class ApartmentController {
     private final ApartmentService apartmentService;
     private final ApartmentRepository apartmentRepo;
