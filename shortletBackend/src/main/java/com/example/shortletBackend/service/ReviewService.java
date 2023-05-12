@@ -33,7 +33,7 @@ public class ReviewService {
     public ResponseEntity addComment(String email, Comments comments,long id){
         Optional<Users> users = userService.findUserByEmail(email);
         if ( users.isPresent()) {
-//            if (reservationRepository.existsReservationsByReservationStateAndApartment_IdAndUsers_Email(ReservationState.COMPLETED,id,email)){
+        //    if (reservationRepository.existsReservationsByReservationStateAndApartment_IdAndUsers_Email(ReservationState.COMPLETED,id,email)){
 
             Optional<Apartments> apartments=apartmentService.findById(id);
             comments.setCommentDate(new Date());

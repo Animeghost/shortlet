@@ -4,7 +4,6 @@ import com.example.shortletBackend.dto.TextResponse;
 import com.example.shortletBackend.entities.Apartments;
 import com.example.shortletBackend.entities.Reservation;
 import com.example.shortletBackend.entities.Users;
-import com.example.shortletBackend.enums.PropertyType;
 import com.example.shortletBackend.enums.ReservationState;
 import com.example.shortletBackend.enums.Status;
 import com.example.shortletBackend.service.ApartmentService;
@@ -41,16 +40,6 @@ public class ReservationController {
 
     }
 
-<<<<<<< HEAD
-    @GetMapping("/property_type")
-    public ResponseEntity returnAllPropertyTypes(){
-        PropertyType[] propertyTypes = PropertyType.values();
-        return ResponseEntity.ok(propertyTypes);
-    }
-
-
-=======
->>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
     @PutMapping("/reservation/state/")
     public ResponseEntity changeReservationState(@RequestParam("reservation_id") long id, @RequestBody Reservation reservation) {
         Optional<Reservation> oldReservation = reservationService.findByReservationId(id);

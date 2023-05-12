@@ -2,6 +2,7 @@ package com.example.shortletBackend.controllers;
 
 import com.example.shortletBackend.dto.ApartmentsDTO;
 import com.example.shortletBackend.dto.TextResponse;
+import com.example.shortletBackend.elasticRepo.ApartmentElasticRepo;
 import com.example.shortletBackend.entities.Apartments;
 import com.example.shortletBackend.entities.Pictures;
 import com.example.shortletBackend.entities.Users;
