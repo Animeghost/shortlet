@@ -22,10 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-<<<<<<< HEAD
-=======
 import javax.mail.MessagingException;
->>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
