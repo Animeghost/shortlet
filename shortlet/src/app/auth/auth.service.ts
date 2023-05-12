@@ -103,11 +103,7 @@ export class AuthService {
     expiresIn: number
   ) {
     this.http
-<<<<<<< HEAD
-      .post('/api/signup', {
-=======
       .post(environment.endpoint + '/signup', {
->>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
         name: displayName,
         email: email,
       })
