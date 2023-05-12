@@ -1,7 +1,6 @@
 package com.example.shortletBackend.entities;
 
 import com.example.shortletBackend.enums.ReservationState;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
