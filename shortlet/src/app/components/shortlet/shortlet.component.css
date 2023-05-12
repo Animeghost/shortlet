@@ -124,13 +124,14 @@
 }
 
 .col {
-  /* width: 50%; */
+  width: 50%;
   /* padding-left: 12px; */
   padding-right: 0;
 }
 
 .reserve_datepicker {
-  width: 150px;
+  /* width: 150px; */
+  width: 100%;
   padding: 0;
 }
 
@@ -209,7 +210,7 @@ mat-label {
 
 #see-more {
   display: inline-block;
-  background-color: #ff0066;
+  background-color: #8598a7;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
@@ -222,7 +223,7 @@ mat-label {
 }
 
 .see-more:hover {
-  background-color: #ff0066;
+  background-color: rgb(167, 167, 167);
 }
 
 .send_comment {
@@ -235,26 +236,14 @@ mat-label {
   padding: 7px 0;
 }
 
-@media (min-width: 767px) and (max-width: 1025px) {
-  .reservation {
-    margin-left: 0;
-  }
+@media only screen and (max-width: 1440px) {
+  /* mat-form-field {
+    width: 48%;
+  } */
 
   .col {
-    padding: 0 12px;
-  }
-
-  .reserve_datepicker {
-    width: 100%;
-  }
-
-  .secondDatepicker {
-    margin-top: 10px;
-  }
-}
-@media only screen and (max-width: 768px) {
-  mat-form-field {
-    width: 48%;
+    width: 50%;
+    padding-right: 10px;
   }
 
   .reservation {
@@ -264,6 +253,25 @@ mat-label {
 
   .reserve-btn > button {
     padding: 10px 60px;
+  }
+}
+
+@media (min-width: 767px) and (max-width: 1439px) {
+  .reservation {
+    margin-left: 0;
+  }
+
+  .col {
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .reserve_datepicker {
+    width: 100%;
+  }
+
+  .secondDatepicker {
+    margin-top: 10px;
   }
 }
 
@@ -278,7 +286,11 @@ mat-label {
   }
 
   .reserve_datepicker {
-    width: 97%;
+    width: 100%;
+  }
+
+  .col {
+    width: 100%;
   }
 
   .secondDatepicker {

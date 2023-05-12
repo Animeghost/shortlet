@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { User } from 'src/app/Model/user.model';
 import { AuthService } from 'src/app/auth/auth.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { NotificationService } from 'src/app/services/notifications.service';
 
@@ -91,14 +92,14 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataS: DataStorageService,
+    private adminS: AdminService,
     private authS: AuthService,
     private notif: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.getAlluserSub = this.dataS.getAllUsers().subscribe(
+    this.getAlluserSub = this.adminS.getAllUsers().subscribe(
       (res) => {
-        console.log(res);
         this.users = res;
         if (this.users.length === 0) {
           this.noUsers = false;
@@ -113,9 +114,8 @@ export class AdminComponent implements OnInit, OnDestroy {
       (error) => this.notif.errorMessage(error.message)
     );
 
-    this.getAlluserSub = this.dataS.getAllAdmins().subscribe(
+    this.getAlluserSub = this.adminS.getAllAdmins().subscribe(
       (res) => {
-        console.log(res);
         this.admins = res;
         if (this.admins.length === 0) {
           this.noAdmins = false;
@@ -136,9 +136,8 @@ export class AdminComponent implements OnInit, OnDestroy {
       (error) => this.notif.errorMessage(error.message)
     );
 
-    this.pendingReqSub = this.dataS.getAllPendingRequest().subscribe(
+    this.pendingReqSub = this.adminS.getAllPendingRequest().subscribe(
       (res) => {
-        console.log(res);
         this.requests = res;
 
         if (this.requests.length === 0) {
@@ -189,7 +188,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   makeUserAdmin() {
     console.log(this.hold_userdata);
-    this.dataS.makeUserAdmin(this.hold_userdata.id, this.user_email).subscribe(
+    this.adminS.makeUserAdmin(this.hold_userdata.id, this.user_email).subscribe(
       (res: { message: string }) => {
         console.log(res);
         this.notif.successMessage(res.message);
@@ -206,7 +205,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   removeAdmin() {
-    this.dataS
+    this.adminS
       .revokeAdminAccess(this.hold_userdata.id, this.user_email)
       .subscribe(
         (res: { message: string }) => {
@@ -230,7 +229,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   rejectListing() {
-    this.dataS
+    this.adminS
       .rejectListing(this.hold_rejectListing_Data.id, this.user_email)
       .subscribe(
         (res) => {
@@ -253,7 +252,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   acceptListing() {
-    this.dataS
+    this.adminS
       .acceptListing(this.hold_acceptListing_Data.id, this.user_email)
       .subscribe(
         (res) => {

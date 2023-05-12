@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter, map, take } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { HandlingClosingProfileTab } from 'src/app/services/handling-profile.service';
 import { NotificationService } from 'src/app/services/notifications.service';
@@ -20,14 +21,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isUserAdmin: any;
   isUseronAdminPage: boolean;
   currentUrl: string;
+  // notifications: string[] = [];
   // switchTextClick :boolean =false
+  pendingReq: any = [];
+  pendingRequestvalue: number;
+  request: boolean = false;
 
   constructor(
     private authS: AuthService,
     private closeTab: HandlingClosingProfileTab,
     private router: Router,
-    private dataS: DataStorageService,
-    private notif: NotificationService
+    private dataStorage: DataStorageService,
+    private notif: NotificationService,
+    private adminS: AdminService
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +84,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
         },
         (error) => this.notif.errorMessage(error.message)
       );
+
+    // this.notif.notifications.subscribe(notification => {
+    //   // add new notification to list
+    //   this.notifications.push(notification);
+    //   console.log(notification)
+    // });
+
+    this.adminS.getAllPendingRequest().subscribe((response) => {
+      console.log(response);
+      this.pendingReq = response;
+      this.pendingRequestvalue = this.pendingReq.length;
+      this.dataStorage.pendindRequestValue.next(this.pendingRequestvalue);
+      if (this.pendingRequestvalue > 0) {
+        this.request = true;
+      }
+    });
+
+    this.dataStorage.pendindRequestValue.subscribe((value) => {
+      this.pendingRequestvalue = +value;
+      if (this.pendingRequestvalue > 0) {
+        this.request = true;
+      }
+    });
   }
 
   toggleProfileDiv() {

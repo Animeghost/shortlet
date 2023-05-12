@@ -1,5 +1,6 @@
 package com.example.shortletBackend.entities;
 
+import com.example.shortletBackend.enums.HomeState;
 import com.example.shortletBackend.enums.HouseType;
 import com.example.shortletBackend.enums.PropertyType;
 import com.example.shortletBackend.enums.Status;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+<<<<<<< HEAD
 
 import com.example.shortletBackend.enums.HomeState;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -17,6 +19,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
 import java.util.*;
+=======
+import java.util.HashSet;
+import java.util.Set;
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 
 @Entity@Getter @Setter@ToString
 @AllArgsConstructor 
@@ -75,6 +81,7 @@ public class Apartments {
     @Lob
     private String description;
 
+<<<<<<< HEAD
     @OneToMany(mappedBy = "apartment")//,cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
     @OneToMany//(cascade = CascadeType.ALL)
@@ -85,6 +92,22 @@ public class Apartments {
 
     @OneToMany(mappedBy = "apartments")
     private List<Comments> comments = new ArrayList<>();
+=======
+    @OneToMany(mappedBy = "apartment")
+    @ToString.Exclude//,cascade = CascadeType.ALL)
+    private Set<Reservation> reservations = new HashSet<>();
+    @OneToMany
+    @ToString.Exclude//(cascade = CascadeType.ALL)
+    private Set<Pictures> pictures = new HashSet<>();
+
+    @OneToMany(mappedBy = "apartments")
+    @ToString.Exclude
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "apartments")
+    @ToString.Exclude
+    private Set<Comments> comments = new HashSet<>();
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 
 
     public void setHouseRefCode(String name, int id) {

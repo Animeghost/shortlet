@@ -1,9 +1,11 @@
 package com.example.shortletBackend.dto;
 
-import lombok.*;
+import com.example.shortletBackend.enums.PropertyType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +19,8 @@ public class ReservationTableDTO {
     private String apartmentCountry;
     private Date checkInDate;
     private Date checkOutDate;
+    private double apartmentRating;
+    private PropertyType apartmentPropertyType;
 
     private int price;
 

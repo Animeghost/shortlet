@@ -108,6 +108,12 @@ img {
   color: #ff0066;
 }
 
+@media only screen and (max-width: 767.98px) {
+  .bill-section {
+    margin: 0;
+  }
+}
+
 @media (max-width: 425.98px) {
   .bill-section {
     margin: 0;

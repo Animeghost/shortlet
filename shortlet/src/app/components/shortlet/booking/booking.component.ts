@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/services/notifications.service';
 import { Location } from '@angular/common';
 
 import { PaystackOptions } from 'angular4-paystack';
+import { TripsService } from 'src/app/services/trips.service';
 
 @Component({
   selector: 'app-booking',
@@ -36,7 +37,8 @@ export class BookingComponent implements OnDestroy, OnInit {
     private activatedRoute: ActivatedRoute,
     private authS: AuthService,
     private notif: NotificationService,
-    private _location: Location
+    private _location: Location,
+    private tripS: TripsService
   ) {}
 
   ngOnInit() {
@@ -99,7 +101,7 @@ export class BookingComponent implements OnDestroy, OnInit {
     console.log(this.title, ref);
     if (ref.status === 'success') {
       console.log('payment was successful');
-      this.dataStorage.addReservation(
+      this.tripS.addReservation(
         this.id,
         this.emailForPayment,
         this.checkin,

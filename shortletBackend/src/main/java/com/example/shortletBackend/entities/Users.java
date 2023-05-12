@@ -29,10 +29,13 @@ public class Users {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private boolean activeUser = true;
+
     public Users(String name, String email, Role role) {
         this.name = name;
         this.email = email;
         this.role = role;
+
     }
 
     @OneToMany(mappedBy = "users")//,cascade = CascadeType.ALL)

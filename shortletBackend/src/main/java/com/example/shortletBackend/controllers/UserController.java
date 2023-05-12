@@ -1,21 +1,25 @@
 package com.example.shortletBackend.controllers;
 
-import com.example.shortletBackend.dto.*;
+import com.example.shortletBackend.dto.ApartmentForListing;
+import com.example.shortletBackend.dto.ReservationTableDTO;
+import com.example.shortletBackend.dto.TextResponse;
 import com.example.shortletBackend.entities.Apartments;
 import com.example.shortletBackend.entities.Reservation;
 import com.example.shortletBackend.entities.Users;
 import com.example.shortletBackend.enums.ReservationState;
 import com.example.shortletBackend.enums.Role;
-import com.example.shortletBackend.repositories.ApartmentRepository;
 import com.example.shortletBackend.repositories.ReservationRepository;
 import com.example.shortletBackend.repositories.UserRepository;
+import com.example.shortletBackend.service.ApartmentService;
 import com.example.shortletBackend.service.MailService;
+import com.example.shortletBackend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -24,8 +28,9 @@ import java.util.Optional;
 @AllArgsConstructor
 @RequestMapping("/api/")
 public class UserController {
+    private final UserService userService;
     private final UserRepository userRepository;
-    private final ApartmentRepository apartmentRepo;
+    private final ApartmentService apartmentService;
     private final ReservationRepository reservationRepo;
     private final MailService mailService;
     private final ModelMapper mapper;
@@ -34,44 +39,42 @@ public class UserController {
 
     @GetMapping("/")
     public ResponseEntity getUser(@RequestHeader("user_email")String email){
-        return ResponseEntity.of(userRepository.findUsersByEmail(email));
+        return ResponseEntity.of(userService.findUserByEmail(email));
     }
 
-    //get all user with role users
-    @GetMapping("/user")
-    public ResponseEntity getAllNormalUsers(){
-        ArrayList<UsersDTO> userList = new ArrayList<>();
-        for (Users user: userRepository.findAllByRole(Role.USER)
-             ) {
-            userList.add(mapper.map(user, UsersDTO.class));
-        }
-        return ResponseEntity.ok(userList);
+    //get all user with role staff
+    @GetMapping("/staff")
+    public ResponseEntity getAllStaff(){
+        return ResponseEntity.ok(userService.findAllUsersByRole(Role.STAFF));
     }
+
+    //get all user with role user
+    @GetMapping("/user")
+    public ResponseEntity getAllUser(){
+        return ResponseEntity.ok(userService.findAllUsersByRole(Role.USER));
+    }
+
+
 
 //    get all user with admin role
     @GetMapping("/admin")
     public ResponseEntity getAllAdminUsers(){
-        ArrayList<UsersDTO> userList = new ArrayList<>();
-        for (Users user: userRepository.findAllByRole(Role.ADMIN)
-        ) {
-            userList.add(mapper.map(user, UsersDTO.class));
-        }
-        return ResponseEntity.ok(userList);
+        return ResponseEntity.ok(userService.findAllUsersByRole(Role.ADMIN));
     }
     //make an admin a user
     @PutMapping("/user/update/role/")
     public ResponseEntity removeAnAdminUser(@RequestHeader("admin_email")String email
-            , @RequestParam("user_id") long id){
-        Optional<Users> admin_user =userRepository.findUsersByEmail(email);
-        Optional<Users> users=userRepository.findById(id);
+            , @RequestParam("user_id") long id) throws MessagingException {
+        Optional<Users> admin_user =userService.findUserByEmail(email);
+        Optional<Users> users=userService.findUsersById(id);
         if (admin_user.isPresent() && users.isPresent()){
             if (admin_user.get().getRole() == Role.ADMIN){
-                users.get().setRole(Role.USER);
-                userRepository.save(users.get());
-                mailService.sendSimpleMessage(users.get().getEmail(),"Administrative Status Revoked"
+                users.get().setRole(Role.STAFF);
+                userService.save(users.get());
+                mailService.sendHtmlMessage(users.get().getEmail(),"Administrative Status Revoked"
                         ,"Your administrative status has been revoked,reach out to the super admin to find out" +
                                 " why this happened and if it can be changed . \n Till then you are now a plain ol user" +
-                                " enjoy the rest of your day");
+                                " enjoy the rest of your day", users.get().getName(),"/index.html");
                 customResponse.setMessage("User "+users.get().getName()+" is no longer an admin");
                 return ResponseEntity.ok(customResponse);
             }else {
@@ -88,15 +91,16 @@ public class UserController {
 
     @PutMapping("/user/update/")
     public ResponseEntity createAnAdminUser(@RequestHeader("admin_email")String email
-            , @RequestParam("user_id") long id){
-        Optional<Users> admin_user =userRepository.findUsersByEmail(email);
-        Optional<Users> users=userRepository.findById(id);
+            , @RequestParam("user_id") long id) throws MessagingException {
+        Optional<Users> admin_user =userService.findUserByEmail(email);
+        Optional<Users> users=userService.findUsersById(id);
         if (admin_user.isPresent() && users.isPresent()){
-            if (admin_user.get().getRole() == Role.ADMIN){
+            if (admin_user.get().getRole() == Role.ADMIN && users.get().getRole() == Role.STAFF){
                 users.get().setRole(Role.ADMIN);
-                userRepository.save(users.get());
-                mailService.sendSimpleMessage(users.get().getEmail(),"New admin"
-                        ,"You have been selected to be an admin");
+                userService.save(users.get());
+//
+                mailService.sendHtmlMessage(users.get().getEmail(),"Promotion",
+                        "You are receiving this message because you have being promoted to an administrator.",users.get().getName(),"/index.html");
                 customResponse.setMessage("User "+users.get().getName()+" has been made an admin");
                 return ResponseEntity.ok(customResponse);
             }else {
@@ -115,44 +119,21 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity signUp(@RequestBody Users users){
-        Optional<Users> oldUser = userRepository.findUsersByEmail(users.getEmail());
-        if (!oldUser.isPresent()) {//if the user does not exist it creates a new user
-            users.setRole(Role.USER);
-            userRepository.save(users);
-            return ResponseEntity.ok(users);
-        }else {// if it does exist, the user is then returned
-            return ResponseEntity.ok(oldUser);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUser(users));
 
     }
 
     @PutMapping("/update_user/")
     public ResponseEntity updateUser(@RequestHeader("user_email") String email,
          @RequestBody Users users){
-        Optional<Users> oldInfo= userRepository.findUsersByEmail(email);
-        if (oldInfo.isPresent()){
-
-            if (users.getPhoneNo() != null) {
-                oldInfo.get().setPhoneNo(users.getPhoneNo());
-            }
-            if (users.getName() != null) {
-                oldInfo.get().setName(users.getName());
-            }
-
-            userRepository.save(oldInfo.get());
-            return ResponseEntity.ok(mapper.map(oldInfo.get(), UsersDTO.class));
-        }
-        else {
-            return (ResponseEntity) ResponseEntity.notFound();
-        }
-
+        return userService.updateUser(email, users);
     }
 
     @PutMapping("/addReservation/")
     public ResponseEntity addReservation(@RequestBody Reservation reservation,
          @RequestParam("user_email")String email,@RequestParam("apartment_id") long home_id){
-        Optional<Users> user = userRepository.findUsersByEmail(email);
-        Optional<Apartments> apartments= apartmentRepo.findById(home_id);
+        Optional<Users> user = userService.findUserByEmail(email);
+        Optional<Apartments> apartments= apartmentService.findById(home_id);
 
         if(user.isPresent()){
             if(apartments.isPresent()){
@@ -163,7 +144,7 @@ public class UserController {
                 user.get().getReservationSet().add(reservation);
                 apartments.get().getReservations().add(reservation);
 
-                apartmentRepo.save(apartments.get());
+                apartmentService.save(apartments.get());
                 reservationRepo.save(reservation);
                 userRepository.save(user.get());
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(reservation);
@@ -198,8 +179,8 @@ public class UserController {
             customResponse.setMessage("The user does not exist");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(customResponse);
         }else {
-            ArrayList apartmentDto= new ArrayList<>();
-            for (Apartments apartments:apartmentRepo.findAllByUsers(users.get()) ){
+            ArrayList<ApartmentForListing> apartmentDto= new ArrayList<>();
+            for (Apartments apartments:apartmentService.findByUser(users.get()) ){
                 ApartmentForListing listing = mapper.map(apartments,ApartmentForListing.class);
                 listing.setPictures(apartments.getPictures().stream().findFirst().get());
                 apartmentDto.add(listing);

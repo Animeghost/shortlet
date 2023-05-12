@@ -1,24 +1,12 @@
 package com.example.shortletBackend.controllers;
 
-import com.example.shortletBackend.entities.Apartments;
 import com.example.shortletBackend.entities.Comments;
 import com.example.shortletBackend.entities.Review;
-import com.example.shortletBackend.entities.Users;
-import com.example.shortletBackend.enums.ReservationState;
-import com.example.shortletBackend.repositories.*;
+import com.example.shortletBackend.service.ReviewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Optional;
-
-import static java.lang.Math.log;
 
 @AllArgsConstructor
 @RestController
@@ -26,45 +14,20 @@ import static java.lang.Math.log;
 @CrossOrigin
 @RequestMapping("/api/")
 public class ReviewController {
-    private final ReviewRepository reviewRepository;
-    private final CommentRepository commentRepository;
-    private final ReservationRepository reservationRepository;
-    private final UserRepository userRepository;
-    private final ApartmentRepository apartmentRepository;
+    private final ReviewService reviewService;
+
 
 
     @PostMapping("/apartment/comment/add/")
     public ResponseEntity addComment(@RequestParam("apartment_id")long id, @RequestBody Comments comments
             , @RequestHeader("user_email")String email){
-        Optional<Users> users = userRepository.findUsersByEmail(email);
-        if ( users.isPresent()) {
-//            if (reservationRepository.existsReservationsByReservationStateAndApartment_IdAndUsers_Email(ReservationState.COMPLETED,id,email)){
-                
-                Optional<Apartments> apartments=apartmentRepository.findById(id);
-                comments.setCommentDate(new Date());
-                comments.setUsers(users.get());
-                comments.setApartments(apartments.get());
-
-
-                apartmentRepository.save(apartments.get());
-                commentRepository.save(comments);//save a comment
-                userRepository.save(users.get());
-                return ResponseEntity.ok(apartments.get());
-//            }else {
-//                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("this user hasn't completed a stayed at the house" +
-//                        " as such can't comment ");
-//            }
-
-
-        }else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("The user doesn't exist");
-        }
-
+        return reviewService.addComment(email, comments, id);
     }
 
     @PostMapping("/apartment/review/add/")
     public ResponseEntity addReview(@RequestHeader("user_email")String email, @RequestParam("apartment_id")long id
             , @RequestBody Review review){
+<<<<<<< HEAD
         Optional<Users> users = userRepository.findUsersByEmail(email);
         if ( users.isPresent()) {
             if (reservationRepository.existsReservationsByReservationStateAndApartment_IdAndUsers_Email(ReservationState.COMPLETED,id,email)){
@@ -98,6 +61,9 @@ public class ReviewController {
         }else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("The user doesn't exist");
         }
+=======
+       return reviewService.addRating(email,review,id);
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 
     }
 

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { NotificationService } from 'src/app/services/notifications.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,7 @@ import { NotificationService } from 'src/app/services/notifications.service';
 })
 export class ProfileComponent implements OnInit {
   constructor(
+    private userS: UserService,
     private dataS: DataStorageService,
     private notif: NotificationService,
     private router: Router
@@ -20,7 +22,7 @@ export class ProfileComponent implements OnInit {
   phoneNumber: any;
 
   ngOnInit(): void {
-    this.dataS
+    this.userS
       .getUser()
       .subscribe((res: { email: string; name: string; phoneNo: any }) => {
         console.log(res);
@@ -69,7 +71,7 @@ export class ProfileComponent implements OnInit {
           this.notif.warningMessage('please provide 11 digits');
         } else {
           // console.log(this.profileForm.value);
-          this.dataS
+          this.userS
             .updateUserInfo(updateUser, this.profileForm.value['email'])
             .subscribe((res) => {
               console.log(res);
@@ -80,7 +82,7 @@ export class ProfileComponent implements OnInit {
         }
       } else {
         // console.log(this.profileForm.value);
-        this.dataS
+        this.userS
           .updateUserInfo(updateUser, this.profileForm.value['email'])
           .subscribe((res) => {
             console.log(res);

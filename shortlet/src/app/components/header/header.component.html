@@ -77,6 +77,9 @@
 
       <p *ngIf="isUserAdmin" class="Admin removemine" (click)="onSwitchRole()">
         {{ isUseronAdminPage ? "Switch to user" : "Switch to admin" }}
+        <span *ngIf="request && !isUseronAdminPage" class="notification">{{
+          pendingRequestvalue
+        }}</span>
       </p>
       <div class="float-end links removemine">
         <div
@@ -126,10 +129,10 @@
       Log in
     </li>
   </ul>
-  <hr />
+  <hr style="margin-bottom: 7px" />
   <ul style="list-style-type: none; padding: 0">
     <li routerLink="host/shortlets">Rent your home</li>
-    <li style="margin-bottom: 10px">Help</li>
+    <!-- <li style="margin-bottom: 10px">Help</li> -->
   </ul>
 </div>
 
@@ -153,7 +156,7 @@
     <li (click)="toggleProfileDiv()" routerLink="host/shortlets">
       Rent your home
     </li>
-    <li (click)="toggleProfileDiv()">Help</li>
+    <!-- <li (click)="toggleProfileDiv()">Help</li> -->
     <li (click)="toggleProfileDiv(); onLogOut()" style="color: red">Log out</li>
   </ul>
 </div>

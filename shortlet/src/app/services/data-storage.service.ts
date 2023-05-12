@@ -18,6 +18,7 @@ export class DataStorageService {
   propertyType = new BehaviorSubject(null);
   returnAllHomes = new BehaviorSubject(null);
   notFoundPageActive = new Subject();
+  pendindRequestValue = new Subject();
   checkInDateforDB: any;
   checkOutDateforDB: any;
 
@@ -28,6 +29,7 @@ export class DataStorageService {
   ) {}
 
   getShortlets() {
+<<<<<<< HEAD
     return this.http.get<Shortlet>(environment.url + 'verified_homes');
   }
 
@@ -82,6 +84,22 @@ export class DataStorageService {
       .get(
         environment.url +
           'verified_homes/search/?property_type=' +
+=======
+    return this.http.get<Shortlet>(environment.endpoint + '/verified_homes');
+  }
+
+  displayShortlet(id: number): Observable<Shortlet> {
+    return this.http.get<Shortlet>(
+      environment.endpoint + `/home/?house_id=${id}`
+    );
+  }
+
+  getSelectedApartment(property_type: string) {
+    this.http
+      .get(
+        environment.endpoint +
+          '/verified_homes/search/?property_type=' +
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
           property_type
       )
       .subscribe((res) => {
@@ -90,6 +108,7 @@ export class DataStorageService {
       });
   }
 
+<<<<<<< HEAD
   addReservation(
     id: number,
     email: string,
@@ -179,37 +198,17 @@ export class DataStorageService {
     console.log(userComment, id, email);
     return this.http.post(
       environment.url + `apartment/comment/add/?apartment_id=${id}`,
+=======
+  sendComment(userComment: { comment: string }, id: number, email: string) {
+    console.log(userComment, id, email);
+    return this.http.post(
+      environment.endpoint + `/apartment/comment/add/?apartment_id=${id}`,
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
       userComment,
       {
         headers: new HttpHeaders({ user_email: email }),
       }
     );
-  }
-
-  private dateConverterforCheckIn(reserveDate: Date) {
-    const date = new Date(reserveDate);
-
-    const year = date.toLocaleString('default', { year: 'numeric' });
-
-    const month = date.toLocaleString('default', { month: '2-digit' });
-
-    const day = date.toLocaleString('default', { day: '2-digit' });
-
-    const formattedDate1 = year + '-' + month + '-' + day;
-    return formattedDate1;
-  }
-
-  private dateConverterforCheckOut(reserveDate: Date) {
-    const date = new Date(reserveDate);
-
-    const year = date.toLocaleString('default', { year: 'numeric' });
-
-    const month = date.toLocaleString('default', { month: '2-digit' });
-
-    const day = date.toLocaleString('default', { day: '2-digit' });
-
-    const formattedDate2 = year + '-' + month + '-' + day;
-    return formattedDate2;
   }
 
   //get all listings under a user
@@ -221,6 +220,7 @@ export class DataStorageService {
   // }
 
   //countries
+<<<<<<< HEAD
   getCountry() {
     return this.http.get<any[]>('https://restcountries.com/v2/all');
   }
@@ -232,4 +232,6 @@ export class DataStorageService {
   getAllPropertyTypes() {
     return this.http.get<any[]>('http://localhost:8080/property_type');
   }
+=======
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 }

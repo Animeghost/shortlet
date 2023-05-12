@@ -9,6 +9,8 @@ import { User } from 'src/app/Model/user.model';
 import { DataStorageService } from 'src/app/services/data-storage.service';
 import { UserData } from '../../admin/admin.component';
 import { NotificationService } from 'src/app/services/notifications.service';
+import { NewShortletService } from 'src/app/services/new-shortlet.service';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-listing',
@@ -19,6 +21,8 @@ export class ListingComponent {
   user_email: string;
   username: string;
   newListing: any;
+  noPendingListings: boolean = false;
+  pendingListingsArray: any = [];
 
   displayedColumns: string[] = [
     'name',
@@ -38,6 +42,8 @@ export class ListingComponent {
     private dataStorage: DataStorageService,
     private authS: AuthService,
     private notification: NotificationService,
+    private newshortletS: NewShortletService,
+    private adminS: AdminService
   ) {}
 
   ngOnInit() {
@@ -50,10 +56,15 @@ export class ListingComponent {
       }
     });
 
-    this.dataStorage.getListing(this.user_email).subscribe(
+    this.newshortletS.getListing(this.user_email).subscribe(
       (response) => {
         console.log(response);
         this.newListing = response;
+        this.pendingListingsArray = response;
+
+        if (this.pendingListingsArray.length > 0) {
+          this.noPendingListings = true;
+        }
         this.dataSource = new MatTableDataSource(this.newListing);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

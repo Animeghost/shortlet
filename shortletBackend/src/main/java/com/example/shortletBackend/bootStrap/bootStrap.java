@@ -1,6 +1,9 @@
 //package com.example.shortletBackend.bootStrap;
 //
+<<<<<<< HEAD
 //import com.example.shortletBackend.elasticRepo.ApartmentElasticRepo;
+=======
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //import com.example.shortletBackend.entities.*;
 //import com.example.shortletBackend.enums.*;
 //import com.example.shortletBackend.repositories.*;
@@ -22,7 +25,10 @@
 //    private final ReservationRepository reservationRepo;
 //    private final AmenitiesRepository amenitiesRepository;
 //    private final CommentRepository commentRepository;
+<<<<<<< HEAD
 //    private final ApartmentElasticRepo apartmentElasticRepo;
+=======
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //
 //    @Override
 //    public void run(String... args) throws Exception {
@@ -37,10 +43,16 @@
 //        Users isak = new Users("Isak Lennert","isak@gmail.com",Role.USER);
 //        Users peter = new Users("Ladenika Peter","peterladenika@gmail.com",Role.ADMIN);
 //        Users mogena = new Users("Mogena", "abdulai1398@student.babcock.edu.ng",Role.ADMIN);
+<<<<<<< HEAD
 //        Users ghost = new Users("Ghost","ghostpythoncode@gmail.com",Role.ADMIN);
 //
 //
 //        userRepository.saveAll(new ArrayList<>(Arrays.asList(walter,Admin,kathy,samy,melisa,emily,olu,chi,isak,peter,mogena,ghost)));
+=======
+//
+//
+//        userRepository.saveAll(new ArrayList<>(Arrays.asList(walter,Admin,kathy,samy,melisa,emily,olu,chi,isak,peter,mogena)));
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //
 //        Apartments firstHouse = new Apartments();
 //        firstHouse.setAddress("Leece");
@@ -236,6 +248,7 @@
 //                "The space\n" +
 //                "Riad Chamali is a guest house with pool, in the medina of Marrakech, ideal for romantic or family holiday.\n" +
 //                "\n" +
+<<<<<<< HEAD
 //                "We are located 15 minutes walk from the famous Jemaa El Fna square, in the quiet and traditional neighborhood of Berrima (Badii Palace, the old Jewish quarter, tinsmiths' square, the Bahia Palace ...) near the door “Bab Hmar”, which gives quick access to the Golf Courses.\n" +
 //                "\n" +
 //                "Our Riad offers a perfect combination of traditional lifestyle and modern high standard facilities. The riad decoration is sleek, warm and feels natural with paintings and rugs made from local craftmen. The architecture is from the original house called \"Zelliges\" which gives the place a friendly, peaceful and out of time atmosphere.\n" +
@@ -254,6 +267,12 @@
 //                "To add : the tourist taxes (+ 2.50 euros / pers / day)\n" +
 //                "\n" +
 //                "Airport transfers are offered at €15 per day, and €20 from 8 p.m. per trip (up to 3 people, if more people the price varies according to the number).");
+=======
+//                "We are located 15 minutes walk from the famous Jemaa El Fna square, in the quiet and traditional neighborhood of Berrima (Badii Palace, the old Jewish quarter, tinsmiths' square, the Bahia Palace ...) near the door Bab Hmar, which gives quick access to the Golf Courses.\n" +
+//                "\n" +
+//                "Our Riad offers a perfect combination of traditional lifestyle and modern high standard facilities. The riad decoration is sleek, warm and feels natural with paintings and rugs made from local craftmen. The architecture is from the original house called \"Zelliges\" which gives the place a friendly, peaceful and out of time atmosphere.\n"
+//                );
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //        House4.setNoOfBeds(2);
 //        House4.setNoOfBathrooms(1);
 //        House4.setNoOfBedrooms(1);
@@ -455,6 +474,11 @@
 //        Comments comment15= new Comments(" The view is unforgettable.",new Date(2023 - 1900, Calendar.JANUARY, 15),kathy,House7);
 //        Comments comment16= new Comments("Just unique and amazing place to stay. ",new Date(2023 - 1900, Calendar.JANUARY, 20),walter,House7);
 //
+<<<<<<< HEAD
+=======
+//        House7.getComments().addAll(new ArrayList<>(Arrays.asList(comment15,comment16)));
+//
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //        Apartments House8 = new Apartments();
 //        House8.setAddress("Mogan");
 //        House8.setState("Gran Canaria");
@@ -801,9 +825,15 @@
 //        Comments comment26= new Comments("The pool and patio area with BBQ are great for spending time outdoors in the lovely weather.",new Date(2022 - 1900, Calendar.DECEMBER, 25),emily,House12);
 //
 //
+<<<<<<< HEAD
 //
 //        ArrayList<Apartments> houseCollection = new ArrayList<>(Arrays.asList(firstHouse, House2,
 //                House3, House4, House5, House6, House7, House8, House9, House10, House11, House12));
+=======
+//        ArrayList<Apartments> houseCollection = new ArrayList<>(Arrays.asList(firstHouse, House2,
+//                House3, House4, House5, House6, House7, House8, House9, House10, House11, House12));
+//
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //        ArrayList<Pictures> picturesCollection = new ArrayList<>(Arrays.asList(picture1, picture2, picture3, picture4,
 //                picture5, picture6, picture7, picture8, picture9, picture10, picture11, picture12, picture13, picture14, picture15,
 //                picture16, picture17, picture18, picture19, picture20, picture21, pictures22, pictures23, pictures24, pictures25, pictures26,
@@ -813,6 +843,11 @@
 //                pictures60));
 //
 //
+<<<<<<< HEAD
+=======
+////        Admin.getApartmentsSet().addAll(new ArrayList<>(Arrays.asList(new Apartments[]{firstHouse, House2, House3, House4, House5
+////                , House6, House7, House8, House9, House10, House11, House12})));
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //
 //        Reservation reservation = new Reservation();
 //        reservation.setCheckInDate(new Date());//today's date(checkIn date)
@@ -827,17 +862,25 @@
 //        ,h11,h12)));
 //        picturesRepository.saveAll(picturesCollection);
 //        userRepository.saveAll(new ArrayList<>(Arrays.asList(walter,Admin,kathy,samy,melisa,emily,olu,chi,isak)));
+<<<<<<< HEAD
 //
 //        apartmentRepo.saveAll(houseCollection);
 ////        apartmentElasticRepo.save(firstHouse);
 ////        apartmentElasticRepo.saveAll(new ArrayList<>(Arrays.asList(firstHouse, House2,
 ////                House3,House4,House5,House6)));
 //        apartmentElasticRepo.saveAll(houseCollection);
+=======
+//        apartmentRepo.saveAll(houseCollection);
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //        commentRepository.saveAll(new ArrayList<>(Arrays.asList(comment1,comment2,comment3,comment4
 //                ,comment5,comment6,comment7,comment8,comment9,comment10,comment11,comment12,comment13,comment14
 //                ,comment15,comment16,comment17,comment18,comment19,comment20,comment21,comment22,comment23,comment24
 //                ,comment25,comment26)));
 //        reservationRepo.save(reservation);
 //
+<<<<<<< HEAD
+=======
+//
+>>>>>>> 3eb61ba60d39269f02e54c6f1dbdcef1bcd224ee
 //    }
 //}

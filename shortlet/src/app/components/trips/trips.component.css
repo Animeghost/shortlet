@@ -3,6 +3,12 @@
   padding-bottom: 30px;
 }
 
+.moreInfo_headings {
+  background: #f3f3f3;
+  padding: 3px;
+  border-radius: 5px;
+}
+
 h4 {
   font-size: 32px;
   color: #484848;
