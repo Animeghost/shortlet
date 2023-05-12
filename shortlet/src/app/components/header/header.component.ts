@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // });
 
     this.adminS.getAllPendingRequest().subscribe((response) => {
-      console.log(response);
+      // console.log(response);
       this.pendingReq = response;
       this.pendingRequestvalue = this.pendingReq.length;
       this.dataStorage.pendindRequestValue.next(this.pendingRequestvalue);

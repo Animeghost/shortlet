@@ -85,7 +85,7 @@
             *matCellDef="let row"
             style="color: #484848"
             data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
+            data-bs-target="#moreInfo"
           >
             {{ row.moreInfo }}
             <i class="fa fa-circle-info" (click)="onSeeMore(row)"></i>
@@ -109,24 +109,28 @@
     ></mat-paginator>
   </div>
 
-  <!-- modal -->
-
   <!-- Button trigger modal -->
+  <!-- <button
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#moreInfo"
+  >
+    Launch demo modal
+  </button> -->
 
   <!-- Modal -->
   <div
     class="modal fade"
-    id="staticBackdrop"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
+    id="moreInfo"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
+    aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">More Info</h5>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">More info</h1>
           <button
             type="button"
             class="btn-close"
@@ -135,7 +139,6 @@
           ></button>
         </div>
         <div class="modal-body">
-          <!-- <p>Reservation ID: {{ UserData.id }}</p> -->
           <p>
             <span class="moreInfo_headings">Name:</span>
             {{ UserData.apartmentName }}
@@ -144,16 +147,23 @@
             <span class="moreInfo_headings">Country:</span>
             {{ UserData.apartmentCountry }}
           </p>
-          <!-- <p>Guests: {{ UserData.numGuests }}</p>
-        <p>Rooms: {{ UserData.numRooms }}</p> -->
+
           <p>
             <span class="moreInfo_headings">From:</span>
             {{ UserData.checkInDate | date }} to
             {{ UserData.checkOutDate | date }}
           </p>
           <p>
+            <span class="moreInfo_headings"> Property type:</span>
+            {{ UserData.apartmentPropertyType | titlecase }}
+          </p>
+          <p>
+            <span class="moreInfo_headings"> Rating:</span>
+            {{ UserData.apartmentRating }}
+          </p>
+          <p>
             <span class="moreInfo_headings">Price:</span>
-            {{ UserData.price | number : "1.0" : "en-US" }}
+            ₦{{ UserData.price | number : "1.0" : "en-US" }}
           </p>
         </div>
       </div>

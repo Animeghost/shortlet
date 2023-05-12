@@ -32,6 +32,8 @@ export interface RequestData {
   id: number;
   name: string;
   state: string;
+  maxNoOfGuests: number;
+  price: number;
 }
 
 export interface RowData {
@@ -60,6 +62,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   username = '';
   user_email: string;
   hold_userdata: RowData;
+  generalData: any = {};
+  hostData: any = {};
+  hostPics: any = [];
   hold_rejectListing_Data: RowDataForListingRequest;
   hold_acceptListing_Data: RowDataForListingRequest;
   noPendingReq: boolean;
@@ -75,7 +80,13 @@ export class AdminComponent implements OnInit, OnDestroy {
   // any request with 2 or nothing e.g dataSource is for thw users table
 
   displayedColumns: string[] = ['name', 'email', 'action'];
-  displayedColumns1: string[] = ['name', 'country', 'action'];
+  displayedColumns1: string[] = [
+    'name',
+    'country',
+    'maxNoOfGuests',
+    'price',
+    'action',
+  ];
 
   dataSource: MatTableDataSource<UserData>;
   dataSource1: MatTableDataSource<RequestData>;
@@ -100,6 +111,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAlluserSub = this.adminS.getAllUsers().subscribe(
       (res) => {
+        console.log(res);
         this.users = res;
         if (this.users.length === 0) {
           this.noUsers = false;
@@ -116,6 +128,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.getAlluserSub = this.adminS.getAllAdmins().subscribe(
       (res) => {
+        console.log(res);
         this.admins = res;
         if (this.admins.length === 0) {
           this.noAdmins = false;
@@ -138,6 +151,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.pendingReqSub = this.adminS.getAllPendingRequest().subscribe(
       (res) => {
+        console.log(res);
         this.requests = res;
 
         if (this.requests.length === 0) {
@@ -267,6 +281,14 @@ export class AdminComponent implements OnInit, OnDestroy {
           this.notif.errorMessage(error.message);
         }
       );
+  }
+
+  onSeeMore(row: any) {
+    console.log(row);
+    this.generalData = row;
+    this.hostData = row.users;
+    this.hostPics = row.pictures;
+    console.log(this.hostPics);
   }
 
   ngOnDestroy(): void {

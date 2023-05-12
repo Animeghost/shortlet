@@ -179,9 +179,13 @@ export class RegisterShortletComponent {
           fileType: this.getFileType(file.type),
           url: this.imagePreview,
         };
-        console.log(imageObject);
-        this.shortletDocumentFile.push(imageObject);
-        console.log(this.shortletDocumentFile);
+        if (this.shortletDocumentFile.length < 5) {
+          // console.log(imageObject);
+          this.shortletDocumentFile.push(imageObject);
+          console.log(this.shortletDocumentFile);
+        } else {
+          this.notif.warningMessage('Maximum of 5 pictures');
+        }
       });
     } else {
       this.resetFileInput();

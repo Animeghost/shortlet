@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 export class AdminService {
   constructor(private http: HttpClient) {}
   getAllUsers() {
-    return this.http.get(environment.endpoint + '/user');
+    return this.http.get(environment.endpoint + '/staff');
   }
 
   getAllAdmins() {

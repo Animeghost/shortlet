@@ -28,6 +28,24 @@
               </td>
             </ng-container>
 
+            <!-- Max number of guests Column -->
+            <ng-container matColumnDef="maxNoOfGuests">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Max no of guests
+              </th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.maxNoOfGuests }}
+              </td>
+            </ng-container>
+
+            <!-- price Column -->
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+              <td mat-cell *matCellDef="let row" style="color: #484848">
+                {{ row.price }}
+              </td>
+            </ng-container>
+
             <!-- Location Column -->
             <ng-container matColumnDef="country">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -42,7 +60,27 @@
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
               <td mat-cell *matCellDef="let row">
-                <button
+                <i
+                  class="fa-solid fa-check fa-xl"
+                  (click)="onAccept(row)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#Accept"
+                ></i>
+                <i
+                  class="fa-solid fa-xmark fa-xl"
+                  (click)="onReject(row)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#Reject"
+                ></i>
+                <i
+                  class="fa fa-circle-info fa-xl"
+                  style="color: grey"
+                  data-bs-toggle="modal"
+                  data-bs-target="#moreInfoReq"
+                  (click)="onSeeMore(row)"
+                ></i>
+
+                <!-- <button
                   class="btn rejectbtn"
                   (click)="onReject(row)"
                   data-bs-toggle="modal"
@@ -57,7 +95,7 @@
                   data-bs-target="#Accept"
                 >
                   Accept requests
-                </button>
+                </button> -->
               </td>
             </ng-container>
 
@@ -81,9 +119,9 @@
     </mat-tab>
     <!-- break -->
     <!-- break -->
-    <mat-tab label="All Users">
+    <mat-tab label="All Staffs">
       <div [hidden]="noUsers">
-        <p style="text-align: center; margin-top: 3rem">No Users available</p>
+        <p style="text-align: center; margin-top: 3rem">No staff available</p>
       </div>
 
       <div [hidden]="!noUsers" class="UsersTable">
@@ -418,6 +456,70 @@
         >
           Confirm
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- more info Request modal -->
+<div
+  class="modal fade"
+  id="moreInfoReq"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">More info</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <span class="moreInfo_headings">Host name:</span>
+          {{ hostData.name }}
+        </p>
+        <p>
+          <span class="moreInfo_headings">Host email:</span>
+          {{ hostData.email }}
+        </p>
+        <p>
+          <span class="moreInfo_headings">Property description:</span>
+          {{ generalData.description }}
+        </p>
+        <p>
+          <span class="moreInfo_headings">Number of bathrooms:</span>
+          {{ generalData.noOfBathrooms }}
+        </p>
+        <p>
+          <span class="moreInfo_headings">Number of bedrooms:</span>
+          {{ generalData.noOfBedrooms }}
+        </p>
+        <p>
+          <span class="moreInfo_headings">Service fee:</span>
+          ₦{{ generalData.serviceFee }}
+        </p>
+        <p>
+          <span class="moreInfo_headings">Price:</span>
+          ₦{{ generalData.price }}
+        </p>
+        <span class="moreInfo_headings">pictures:</span>
+        <div class="property_pictures">
+          <div
+            style="background-image: url('{{ hostPics[0]?.url }}')"
+            target="_blank"
+          ></div>
+          <div style="background-image: url('{{ hostPics[1]?.url }}')"></div>
+          <div style="background-image: url('{{ hostPics[2]?.url }}')"></div>
+          <div style="background-image: url('{{ hostPics[3]?.url }}')"></div>
+          <div style="background-image: url('{{ hostPics[4]?.url }}')"></div>
+        </div>
       </div>
     </div>
   </div>
