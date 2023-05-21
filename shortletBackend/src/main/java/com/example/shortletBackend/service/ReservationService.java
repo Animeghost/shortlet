@@ -46,15 +46,18 @@ public class ReservationService {
     }
 
     public TextResponse getReservationByHomes(String email, long id ){
+        Optional<Apartments> apartments = apartmentService.findById(id);
+        if (userService.findUserByEmail(email).get() == apartments.get().getUsers()){
+            // checks if the user accessing the house is the owner
+            ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
 
-        ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
-
-        for (Object reserve : getReservationByApartmentId(id)) {
-            updateReservation((Reservation) reserve);
-            reservationDTOS.add(mapper.map(reserve, ReservationDTO.class));
+            for (Object reserve : getReservationByApartmentId(id)) {
+                updateReservation((Reservation) reserve);
+                reservationDTOS.add(mapper.map(reserve, ReservationDTO.class));
+            }
+            return new TextResponse(reservationDTOS,200);
         }
-        return new TextResponse(reservationDTOS,200);
-
+        return new TextResponse("You are not the owner of the house",403);
     }
 
     public Reservation updateReservation(@NonNull Reservation reservation){

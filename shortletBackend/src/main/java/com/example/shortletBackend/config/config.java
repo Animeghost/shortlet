@@ -1,5 +1,6 @@
 package com.example.shortletBackend.config;
 
+
 import com.example.shortletBackend.dto.TextResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -39,6 +40,7 @@ public class config {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200","https://courageous-piroshki-f9154b.netlify.app/"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
