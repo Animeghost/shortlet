@@ -19,7 +19,7 @@ export class AuthServiceInterceptor implements HttpInterceptor {
       req.url === environment.endpoint + '/admin' ||
       req.url === environment.endpoint + '/house_type' ||
       req.url === environment.endpoint + '/property_type'
-      // req.url != environment.endpoint + '/signup' ||
+      // req.url === environment.endpoint + '/signup'
       // req.url != environment.endpoint + '/verified_homes' ||
       // req.url != environment.endpoint + '/home/' + '*' ||
       // req.url != 'https://restcountries.com/v2/all'

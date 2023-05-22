@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   Auth,
   signOut,
@@ -130,10 +130,16 @@ export class AuthService {
     oauthAccessToken: string
   ) {
     this.http
-      .post(environment.endpoint + '/signup', {
-        name: displayName,
-        email: email,
-      })
+      .post(
+        environment.endpoint + '/signup',
+        {
+          name: displayName,
+          email: email,
+        },
+        {
+          headers: new HttpHeaders({ Authorization: oauthAccessToken }),
+        }
+      )
       .subscribe((res: SignedinUser) => {
         const userRole = new UserRole(res.role);
         this.userRole.next(userRole);
