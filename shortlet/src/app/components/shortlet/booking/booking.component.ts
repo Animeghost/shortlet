@@ -112,7 +112,8 @@ export class BookingComponent implements OnDestroy, OnInit {
         this.emailForPayment,
         this.checkin,
         this.checkout,
-        this.total
+        this.total,
+        this.token
       );
     } else {
       console.log('payment was not successfull');

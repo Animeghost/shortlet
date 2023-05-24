@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;

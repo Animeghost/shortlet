@@ -34,6 +34,7 @@ export class AuthServiceInterceptor implements HttpInterceptor {
           // user_email: user_email,
           Authorization: accessToken,
           'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Origin': '*',
         }),
       });
       return next.handle(modifiedRequest);

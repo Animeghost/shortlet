@@ -10,6 +10,7 @@ export const environment = {
   },
   paystack_key: 'pk_test_132ebd9d8b822325a146ed8d3c55c6d3c7e77821',
   production: false,
-  endpoint: 'https://shortlet.eu-north-1.elasticbeanstalk.com',
-  // endpoint: 'http://localhost:5000',
+  endpoint: 'https://shortlet.eu-north-1.elasticbeanstalk.com/',
+  // endpoint: 'http://shortlet.eu-north-1.elasticbeanstalk.com',
+  // endpoint: 'http://localhost:8080',
 };
