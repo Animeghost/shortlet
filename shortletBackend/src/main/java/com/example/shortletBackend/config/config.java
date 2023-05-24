@@ -11,11 +11,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.Arrays;
 
 @Configuration
-public class config {
+@EnableWebMvc
+public class config  {
     @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();
@@ -34,14 +36,15 @@ public class config {
 //        source.registerCorsConfiguration("/**",configuration);
 //        return source;
 //    }
+//
 
     @Bean
     public FilterRegistrationBean corsFilterRegistration(){
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200","https://courageous-piroshki-f9154b.netlify.app/"));
+        configuration.setExposedHeaders(Arrays.asList("Content-Type","Access-Control-Allow-Origin","Access-Control-Allow-Headers","Authorization","X-Requested-With"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200","https://courageous-piroshki-f9154b.netlify.app"));
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         source.registerCorsConfiguration("/**",configuration);
@@ -52,6 +55,8 @@ public class config {
 
 
     }
+
+
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder){
         return new RestTemplateBuilder().build();

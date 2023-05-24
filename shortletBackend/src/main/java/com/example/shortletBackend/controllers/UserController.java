@@ -84,6 +84,7 @@ public class UserController {
                                 " enjoy the rest of your day", users.get().getName(),"/index.html");
                 customResponse.setMessage("User "+users.get().getName()+" is no longer an admin");
                 return ResponseEntity.ok(customResponse);
+
             }else {
                 customResponse.setMessage("User does not have permission to do this");
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(customResponse);

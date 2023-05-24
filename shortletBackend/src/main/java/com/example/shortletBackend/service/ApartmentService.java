@@ -94,9 +94,9 @@ public class ApartmentService {
             apartments.setUsers(users);
 
         changeStatus(apartments,Status.UNOCCUPIED);
-        mailService.sendHtmlMessage(users.getEmail(), "Pending Apartment Request","Your listing with the title "+apartments.getName()
-                        +" has been listed unverified please contact support for additional aid.",apartments.getUsers().getName()
-                ,"/index.html");
+//        mailService.sendHtmlMessage(users.getEmail(), "Pending Apartment Request","Your listing with the title "+apartments.getName()
+//                        +" has been listed unverified please contact support for additional aid.",apartments.getUsers().getName()
+//                ,"/index.html");
         return apartments;
     }
 
