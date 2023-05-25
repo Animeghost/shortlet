@@ -110,6 +110,7 @@ export class ShortletComponent implements OnInit {
 
         console.log(this.shortletPictures); //pictures of shortlet from API
         this.disableReserveDate();
+        this.noSelectDateAhead();
         this.showShortlet = true;
       },
       (error) => console.log(error)
@@ -123,6 +124,7 @@ export class ShortletComponent implements OnInit {
   trialM(e) {
     this.fetchDateSelected();
     this.disableReserveDate();
+    this.noSelectDateAhead();
   }
 
   fetchDateSelected() {
@@ -205,6 +207,18 @@ export class ShortletComponent implements OnInit {
       return true;
     }
   };
+
+  noSelectDateAhead() {
+    const checkInDate = this.checkinDate.getTime();
+    const checkOutDate = this.minDateForCheckOut.getTime();
+    if (checkInDate < checkOutDate) {
+      this.buttonDisable = false;
+      console.log(true);
+    } else {
+      this.buttonDisable = true;
+      console.log(false);
+    }
+  }
 
   increment() {
     if (this.counter < this.maxNoOfGuests) {

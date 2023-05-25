@@ -41,9 +41,9 @@ export class NewShortletService {
 
   DeleteListing(id: number, email: string, token: string) {
     return this.http.delete(
-      `http://localhost:8080/apartment/delete/?apartment_id=${id}`,
+      environment.endpoint + `/apartment/delete/?apartment_id=${id}`,
       {
-        headers: new HttpHeaders({ Authorization: email }),
+        headers: new HttpHeaders({ Authorization: token }),
         responseType: 'text',
       }
     );

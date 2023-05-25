@@ -141,17 +141,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  // private onlineChecker() {
+  //   if (this.token) {
+  //     this.adminS.getAllPendingRequest(this.token).subscribe((response) => {
+  //       // console.log(response);
+  //       this.pendingReq = response;
+  //       this.pendingRequestvalue = this.pendingReq.length;
+  //       this.dataStorage.pendindRequestValue.next(this.pendingRequestvalue);
+  //       if (this.pendingRequestvalue > 0) {
+  //         this.request = true;
+  //       }
+  //     });
+  //   }
+  // }
+
   private onlineChecker() {
-    if (this.token) {
-      this.adminS.getAllPendingRequest(this.token).subscribe((response) => {
-        // console.log(response);
-        this.pendingReq = response;
-        this.pendingRequestvalue = this.pendingReq.length;
-        this.dataStorage.pendindRequestValue.next(this.pendingRequestvalue);
-        if (this.pendingRequestvalue > 0) {
-          this.request = true;
-        }
-      });
-    }
+    this.authS.user.subscribe((user) => {
+      if (user) {
+        this.adminS.getAllPendingRequest(this.token).subscribe((response) => {
+          // console.log(response);
+          this.pendingReq = response;
+          this.pendingRequestvalue = this.pendingReq.length;
+          this.dataStorage.pendindRequestValue.next(this.pendingRequestvalue);
+          if (this.pendingRequestvalue > 0) {
+            this.request = true;
+          }
+        });
+      }
+    });
   }
 }
