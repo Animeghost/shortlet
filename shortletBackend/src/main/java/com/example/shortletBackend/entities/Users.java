@@ -37,6 +37,11 @@ public class Users {
         this.role = role;
 
     }
+    public Users(String email, Role role) {
+        this.email = email;
+        this.role = role;
+    }
+
 
     @OneToMany(mappedBy = "users")//,cascade = CascadeType.ALL)
     @ToString.Exclude

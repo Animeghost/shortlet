@@ -17,6 +17,7 @@ import com.example.shortletBackend.service.MailService;
 import com.example.shortletBackend.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 @AllArgsConstructor
+@Slf4j
 public class ApartmentController {
     private final ApartmentService apartmentService;
     private final UserService userService;
@@ -80,6 +82,7 @@ public class ApartmentController {
                     ,"Your listing with the title "+updatedApartment.get().getName()
                             +" has been verified and user are now able to be reserved.",updatedApartment.get().getUsers().getName()
             ,"/index.html");
+
 
             return getAllPendingHomes();
 

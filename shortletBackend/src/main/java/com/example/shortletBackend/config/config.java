@@ -22,21 +22,6 @@ public class config  {
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration= new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200","https://courageous-piroshki-f9154b.netlify.app/"));
-//        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
-//        configuration.setAllowCredentials(true);
-//
-//        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept","Authorization"));
-//        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**",configuration);
-//        return source;
-//    }
-//
 
     @Bean
     public FilterRegistrationBean corsFilterRegistration(){

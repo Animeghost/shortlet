@@ -1,0 +1,85 @@
+version: '3.8'
+
+
+
+
+services:
+
+  shortletbackend-app:
+
+    image: shortletbackend-app
+
+    restart: on-failure
+
+    build: .
+
+    ports:
+
+      - 9000:9000
+
+#    depends_on:
+#
+#      - mysqldb
+
+    environment:
+
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/shortlet
+
+#      SPRING_PROFILES_ACTIVE: docker
+
+#      MYSQL_PASSWORD: admin
+#
+#      MYSQL_HOSTNAME: localhost
+#
+#      MYSQL_PORT: 3306
+#
+#      MYSQL_DB_NAME: shortlet
+#
+#      MYSQL_USERNAME: root
+
+    network_mode: "host"
+
+
+
+
+#  mysqldb:
+#
+#    container_name: mysqldb
+#
+#    image: mysql
+#
+#    ports:
+#
+#      - 3309:3306
+#
+#    environment:
+#
+#      MYSQL_DATABASE: shortlet
+#
+#      MYSQL_ROOT_PASSWORD: admin
+#
+#    network_mode: "host"
+
+
+
+
+  adminer:
+
+    image: adminer
+
+    restart: always
+
+    ports:
+
+      - 8080:8080
+
+    network_mode: "host"
+
+
+
+
+#networks:
+
+#  shortlet-network:
+
+#    driver: bridge

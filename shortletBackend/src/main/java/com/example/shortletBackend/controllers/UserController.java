@@ -127,7 +127,8 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity signUp(@RequestBody Users users){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUser(users));
+        Users newUser= userService.addUser(users);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     @PutMapping("/update_user/")

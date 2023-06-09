@@ -30,6 +30,10 @@ public class AuthenticatedUser implements UserDetails {
         return users.getEmail();
     }
 
+    public String getName(){
+        return users.getName();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
