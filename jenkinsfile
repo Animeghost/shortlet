@@ -1,0 +1,26 @@
+def dev_list ='inameti@systemspecs.com.ng,abdulai@systemspecscomng.onmicrosoft.com,ladenika@systemspecs.com.ng'
+
+pipeline{
+    agent any
+    options {
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '2')
+        disableConcurrentBuilds()      
+    }
+    tools {
+      jdk 'java'
+      maven 'Maven'
+    }
+    stages{
+        stage("Checkout from SCM(GIT)"){
+            steps{
+                echo "Checking out scm ..."
+                cleanWs()
+                checkout scm
+            }
+        }
+        stage('build'){
+            
+        }
+
+    }
+}

@@ -12,5 +12,5 @@ export const environment = {
   production: false,
   // endpoint: 'https://shortlet.eu-north-1.elasticbeanstalk.com/',
   // endpoint: 'http://shortlet.eu-north-1.elasticbeanstalk.com',
-  endpoint: 'http://localhost:5000',
+  endpoint: 'http://localhost:9000',
 };

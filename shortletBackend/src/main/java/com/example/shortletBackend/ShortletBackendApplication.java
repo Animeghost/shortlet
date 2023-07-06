@@ -9,5 +9,5 @@ public class ShortletBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShortletBackendApplication.class, args);
 	}
-
+ 
 }
