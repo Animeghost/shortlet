@@ -2,7 +2,7 @@
 
 
 ## Name
-Air BnB Clone
+SHORTLET(Air BnB Clone)
 
 ## Description
 Implemented user authentication and authorization features, enabling users to create profiles, search for available rooms, and make reservations. 
