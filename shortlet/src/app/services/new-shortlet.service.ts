@@ -43,7 +43,7 @@ export class NewShortletService {
     return this.http.delete(
       environment.endpoint + `/apartment/delete/?apartment_id=${id}`,
       {
-        headers: new HttpHeaders({ Authorization: email }),
+        headers: new HttpHeaders({ Authorization: token }),
         responseType: 'text',
       }
     );

@@ -59,7 +59,8 @@ export class TripsService {
   ) {
     console.log(userComment, reservation_id, apartment_id, email);
     return this.http.post(
-      `http://localhost:8080/apartment/comment/add/?apartment_id=${apartment_id}&reservation_id=${reservation_id}`,
+      environment.endpoint +
+        `/apartment/comment/add/?apartment_id=${apartment_id}&reservation_id=${reservation_id}`,
       userComment,
       {
         headers: new HttpHeaders({ Authorization: token }),

@@ -164,37 +164,43 @@ export class RegisterShortletComponent {
   onImageUpload(fileDetail) {
     let file: File = fileDetail;
 
-    if (this.allowedMimeType.indexOf(file.type) != -1) {
-      let fileName =
-        file.name.length > 10 ? file.name.substring(0, 10) + '...' : file.name;
+    if (file.size < 5120) {
+      if (this.allowedMimeType.indexOf(file.type) != -1) {
+        let fileName =
+          file.name.length > 10
+            ? file.name.substring(0, 10) + '...'
+            : file.name;
 
-      const toBase64 = (file) =>
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (error) => reject(error);
+        const toBase64 = (file) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+          });
+
+        toBase64(file).then((data) => {
+          this.imagePreview = data;
+          const imageObject = {
+            image: this.imagePreview,
+            filename: fileName,
+            fileType: this.getFileType(file.type),
+            url: this.imagePreview,
+          };
+          if (this.shortletDocumentFile.length < 5) {
+            // console.log(imageObject);
+            this.shortletDocumentFile.push(imageObject);
+            console.log(this.shortletDocumentFile);
+          } else {
+            this.notif.warningMessage('Maximum of 5 pictures');
+          }
         });
-
-      toBase64(file).then((data) => {
-        this.imagePreview = data;
-        const imageObject = {
-          image: this.imagePreview,
-          filename: fileName,
-          fileType: this.getFileType(file.type),
-          url: this.imagePreview,
-        };
-        if (this.shortletDocumentFile.length < 5) {
-          // console.log(imageObject);
-          this.shortletDocumentFile.push(imageObject);
-          console.log(this.shortletDocumentFile);
-        } else {
-          this.notif.warningMessage('Maximum of 5 pictures');
-        }
-      });
+      } else {
+        this.resetFileInput();
+        this.notif.errorMessage('File format not supported');
+      }
     } else {
-      this.resetFileInput();
-      this.notif.errorMessage('File format not supported');
+      this.notif.warningMessage('image should not exceed 5mb');
     }
   }
 
