@@ -12,9 +12,9 @@ import com.example.shortletBackend.enums.Role;
 import com.example.shortletBackend.repositories.AmenitiesRepository;
 import com.example.shortletBackend.repositories.ApartmentRepository;
 import com.example.shortletBackend.repositories.PicturesRepository;
-import com.example.shortletBackend.service.ApartmentService;
+import com.example.shortletBackend.service.ApartmentServiceImpl;
 import com.example.shortletBackend.service.MailService;
-import com.example.shortletBackend.service.UserService;
+import com.example.shortletBackend.service.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,8 +34,8 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class ApartmentController {
-    private final ApartmentService apartmentService;
-    private final UserService userService;
+    private final ApartmentServiceImpl apartmentServiceImpl;
+    private final UserServiceImpl userServiceImpl;
     private final ApartmentRepository apartmentRepo;
     private final PicturesRepository picRepo;
 
@@ -48,13 +47,13 @@ public class ApartmentController {
     //get all homes
     @GetMapping("/homes")
     public ResponseEntity getAllHomes(){
-        return ResponseEntity.ok(apartmentService.findAllApartments());
+        return ResponseEntity.ok(apartmentServiceImpl.findAllApartments());
     }
 
 
     @GetMapping("/homes/PENDING")
     public ResponseEntity getAllPendingHomes(){
-        return ResponseEntity.ok(apartmentService.findAllApartmentByHomeState(HomeState.PENDING,ApartmentsDTO.class));
+        return ResponseEntity.ok(apartmentServiceImpl.findAllApartmentByHomeState(HomeState.PENDING,ApartmentsDTO.class));
     }
     //get all property files
     @GetMapping("/property_type")
@@ -72,10 +71,10 @@ public class ApartmentController {
     @PutMapping("/home/update/verify")
     public ResponseEntity updatePendingHouse(Principal principal
             , @RequestParam("apartment_id") long id) throws MessagingException {
-        if (userService.findUserByEmail(principal.getName()).get().getRole() == Role.ADMIN){
-            Optional<Apartments> updatedApartment = apartmentService.findById(id);
+        if (userServiceImpl.findUserByEmail(principal.getName()).get().getRole() == Role.ADMIN){
+            Optional<Apartments> updatedApartment = apartmentServiceImpl.findById(id);
             updatedApartment.get().setHomeState(HomeState.VERIFIED);
-            apartmentService.save(updatedApartment.get());
+            apartmentServiceImpl.save(updatedApartment.get());
 
             mailService.sendHtmlMessage(updatedApartment.get().getUsers().getEmail()
                     ,"Listing has been verified"
@@ -95,10 +94,10 @@ public class ApartmentController {
     @PutMapping("/home/update/unverify")
     public ResponseEntity updateHouse(Principal principal
             , @RequestParam("apartment_id") long id) throws MessagingException {
-        if (userService.findUserByEmail(principal.getName()).get().getRole() == Role.ADMIN){
-            Optional<Apartments> updatedApartment = apartmentService.findById(id);
+        if (userServiceImpl.findUserByEmail(principal.getName()).get().getRole() == Role.ADMIN){
+            Optional<Apartments> updatedApartment = apartmentServiceImpl.findById(id);
             updatedApartment.get().setHomeState(HomeState.UNVERIFIED);
-            apartmentService.save(updatedApartment.get());
+            apartmentServiceImpl.save(updatedApartment.get());
 
             mailService.sendHtmlMessage(updatedApartment.get().getUsers().getEmail()
                     ,"Listing is not verified"
@@ -120,35 +119,23 @@ public class ApartmentController {
     @GetMapping("/verified_homes")
     public ResponseEntity getAllVerifiedHomes(){
 
-        return ResponseEntity.ok(apartmentService.findAllApartmentByHomeState(HomeState.VERIFIED,ApartmentsDTO.class));
+        return ResponseEntity.ok(apartmentServiceImpl.findAllApartmentByHomeState(HomeState.VERIFIED,ApartmentsDTO.class));
     }
 
     //get all verified homes of a specified property type
     @GetMapping("/verified_homes/search/")
     public ResponseEntity getAllVerifiedHomesWithPropertyType(@RequestParam("property_type")PropertyType propertyType){
-        ArrayList<ApartmentsDTO> hotelList = new ArrayList<>();
-        for (Apartments hotel:apartmentRepo.findAllByPropertyTypeIsAndHomeState(propertyType,HomeState.VERIFIED)
-        ) {
-            hotelList.add(mapper.map(hotel, ApartmentsDTO.class));
-        }
-        return ResponseEntity.ok(hotelList);
+        return ResponseEntity.ok(apartmentServiceImpl.getAllVerifiedHomesWithPropertyType(propertyType));
     }
-
-
 
     @GetMapping("/verified_homes/search")
     public ResponseEntity getAllVerifiedHomesWithNumberOfGuest(@RequestParam("number_of_guests")int number){
-        ArrayList<ApartmentsDTO> hotelList = new ArrayList<>();
-        for (Apartments hotel:apartmentRepo.findAllByMaxNoOfGuestsGreaterThanEqualAndHomeState(number,HomeState.VERIFIED)
-        ) {
-            hotelList.add(mapper.map(hotel, ApartmentsDTO.class));
-        }
-        return ResponseEntity.ok(hotelList);
+        return ResponseEntity.ok(apartmentServiceImpl.getAllVerifiedHomesWithNumberOfGuest(number));
     }
 
     @GetMapping("/home/")
     public ResponseEntity getHotel(@RequestParam("house_id") long id ) throws IllegalAccessException, NoSuchFieldException{
-        Optional<Apartments> apartments = apartmentService.findById(id);
+        Optional<Apartments> apartments = apartmentServiceImpl.findById(id);
         if (apartments.isPresent()){
             // return only amenities that have true as a reply
             ApartmentsDTO apartmentsDTO = mapper.map(apartments.get(),ApartmentsDTO.class);
@@ -169,9 +156,10 @@ public class ApartmentController {
     }
 
     //user creating a new home
+    // TODO move all repo calls to service file
     @PostMapping("/addHome/")
     public ResponseEntity addHome(Principal principal, @RequestBody Apartments apartments) throws MessagingException {
-        Optional<Users> users= userService.findUserByEmail(principal.getName());
+        Optional<Users> users= userServiceImpl.findUserByEmail(principal.getName());
         if (users.isPresent()) {
             if (apartments.getPictures() != null) {
                 for (Pictures picture: apartments.getPictures()
@@ -184,8 +172,8 @@ public class ApartmentController {
                 amenitiesRepo.save(apartments.getAmenities());
             }
             users.get().getApartmentsSet().add(apartments);
-            apartmentService.addHome(apartments,users.get());
-            userService.save(users.get());
+            apartmentServiceImpl.addHome(apartments,users.get());
+            userServiceImpl.save(users.get());
 
             return ResponseEntity.ok(apartments);
         }else {
@@ -199,7 +187,7 @@ public class ApartmentController {
     @PutMapping("/apartment/edit/")
     public ResponseEntity editHome(Principal principal,@RequestParam("apartment_id") long id
             ,@RequestBody Apartments updatedApartments) {
-        TextResponse response = apartmentService.updateApartment(updatedApartments,principal.getName(),id);
+        TextResponse response = apartmentServiceImpl.updateApartment(updatedApartments,principal.getName(),id);
         return ResponseEntity.status(response.getStatusCode()).body(response.getMessage());
     }
 
@@ -214,7 +202,7 @@ public class ApartmentController {
 
     @DeleteMapping("/apartment/delete/")
     public ResponseEntity deleteApartment(@RequestParam("apartment_id")long id, Principal principal){
-        return ResponseEntity.ok(apartmentService.deleteApartment(id,principal.getName()));
+        return ResponseEntity.ok(apartmentServiceImpl.deleteApartment(id,principal.getName()));
     }
 
 

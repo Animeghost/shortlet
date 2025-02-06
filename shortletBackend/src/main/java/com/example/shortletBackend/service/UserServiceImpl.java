@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserServiceImpl {
     private final UserRepository userRepository;
 
     private final ModelMapper mapper;
