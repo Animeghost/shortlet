@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  shortletbackend-app:
+
+    image: animeghost/shortlet:1.0
+    restart: on-failure
+    build: ./shortletBackend
+    ports:
+    - 9000:9000
+    depends_on:
+    - mysqldb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/shortlet?allowPublicKeyRetrieval=true
+      SPRING_PROFILES_ACTIVE: docker
+      MYSQL_PASSWORD: admin
+      MYSQL_HOSTNAME: mysqldb
+      MYSQL_PORT: 3309
+      MYSQL_DB_NAME: shortlet
+      MYSQL_USERNAME: root
+
+
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
+    ports:
+    - 3309:3306
+    environment:
+      MYSQL_DATABASE: shortlet
+      MYSQL_ROOT_PASSWORD: admin
+      
+
+  angular-app:
+    image: animeghost/shortlet_frontend:latest
+    build: ./shortlet
+    ports:
+      - 4200:80
+    depends_on:
+      - shortletbackend-app

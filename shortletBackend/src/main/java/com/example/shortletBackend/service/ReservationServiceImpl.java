@@ -7,6 +7,7 @@ import com.example.shortletBackend.entities.Reservation;
 import com.example.shortletBackend.entities.Users;
 import com.example.shortletBackend.enums.ReservationState;
 import com.example.shortletBackend.repositories.ReservationRepository;
+import com.example.shortletBackend.service.Impl.ReservationService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;
@@ -19,10 +20,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service @AllArgsConstructor
-public class ReservationService {
+public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
-    private final UserService userService;
-    private final ApartmentService apartmentService;
+    private final UserServiceImpl userServiceImpl;
+    private final ApartmentServiceImpl apartmentServiceImpl;
     private final ModelMapper mapper;
 
 
@@ -34,27 +35,34 @@ public class ReservationService {
         save(reservation);
     }
 
-    public Optional<Reservation> findByReservationId(long id){
+    public List<Reservation> findAllReservationByUser(Users user){
+       return reservationRepository.findAllByUsers(user);
+    }
+
+    public Optional<Reservation> findByReservationId(Long id){
         return reservationRepository.findById(id);
     }
     public List<Reservation> findAllReservations(){
         return reservationRepository.findAll();
     }
 
-    public ArrayList getReservationByApartmentId(long id){
+    public List<Reservation> getReservationByApartmentId(Long id){
         return reservationRepository.findAllByApartment_Id(id);
     }
 
-    public TextResponse getReservationByHomes(String email, long id ){
+    public TextResponse getReservationByHomes(String email, Long id ){
+        Optional<Apartments> apartments = apartmentServiceImpl.findById(id);
+        if (userServiceImpl.findUserByEmail(email).get() == apartments.get().getUsers()){
+            // checks if the user accessing the house is the owner
+            ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
 
-        ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
-
-        for (Object reserve : getReservationByApartmentId(id)) {
-            updateReservation((Reservation) reserve);
-            reservationDTOS.add(mapper.map(reserve, ReservationDTO.class));
+            for (Object reserve : getReservationByApartmentId(id)) {
+                updateReservation((Reservation) reserve);
+                reservationDTOS.add(mapper.map(reserve, ReservationDTO.class));
+            }
+            return new TextResponse(reservationDTOS,200);
         }
-        return new TextResponse(reservationDTOS,200);
-
+        return new TextResponse("You are not the owner of the house",403);
     }
 
     public Reservation updateReservation(@NonNull Reservation reservation){
@@ -68,9 +76,9 @@ public class ReservationService {
         return reservation;
     }
 
-    public TextResponse addReservation(Reservation reservation, String email, long home_id){
-        Optional<Users> user = userService.findUserByEmail(email);
-        Optional<Apartments> apartments= apartmentService.findById(home_id);
+    public TextResponse addReservation(Reservation reservation, String email, Long home_id){
+        Optional<Users> user = userServiceImpl.findUserByEmail(email);
+        Optional<Apartments> apartments= apartmentServiceImpl.findById(home_id);
 
         if(user.isPresent()){
             if(apartments.isPresent()){
@@ -83,9 +91,9 @@ public class ReservationService {
                 user.get().getReservationSet().add(reservation);
                 apartments.get().getReservations().add(reservation);
 
-                apartmentService.save(apartments.get());
+                apartmentServiceImpl.save(apartments.get());
                 reservationRepository.save(reservation);
-                userService.save(user.get());
+                userServiceImpl.save(user.get());
                 return new TextResponse(reservation,200);
             }else {
 

@@ -31,7 +31,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), new JacksonFactory(), credential).setApplicationName("Oauth2").build();
 
         Userinfo userinfo = oauth2.userinfo().get().execute();
+
         return userinfo.getEmail();
+    }
+
+    public String getUserName(String accessToken) throws IOException {
+        GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
+
+        Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), new JacksonFactory(), credential).setApplicationName("Oauth2").build();
+
+        Userinfo userinfo = oauth2.userinfo().get().execute();
+
+        return userinfo.getName();
     }
 
     @Override
@@ -40,8 +51,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             String jwt = parseJwt(request);
             if (jwt != null ) {
                 String username = getUserEmail(jwt);
+                String Name = getUserName(jwt);
 
-                UserDetails userDetails = customDetailService.loadUserByUsername(username);
+                UserDetails userDetails = customDetailService.loadUserByUsername(username,Name);
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,

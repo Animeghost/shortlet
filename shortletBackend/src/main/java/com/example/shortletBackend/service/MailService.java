@@ -1,6 +1,7 @@
 package com.example.shortletBackend.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,10 +15,15 @@ import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 
 @Service @AllArgsConstructor
+@Slf4j
 public class MailService {
+
 
     @Autowired
     private JavaMailSender emailSender;
+
+    private final String email = "ghostpythoncode@gmail.com";
+
     @Autowired
     private final SpringTemplateEngine templateEngine;
 
@@ -25,7 +31,7 @@ public class MailService {
     public void sendSimpleMessage(String recieverEmail, String subject, String text){
         SimpleMailMessage message = new SimpleMailMessage();
 
-        message.setFrom(System.getenv("email"));
+        message.setFrom(email);
         message.setTo(recieverEmail);
         message.setSubject(subject);
         message.setText(text);
@@ -48,14 +54,17 @@ public class MailService {
         context.setVariable("Twitterlogo","https://mzvfuo.stripocdn.email/content/assets/img/social-icons/circle-black/facebook-circle-black.png");
         context.setVariable("Instalogo","https://mzvfuo.stripocdn.email/content/assets/img/social-icons/circle-black/instagram-circle-black.png");
         context.setVariable("YTlogo","https://mzvfuo.stripocdn.email/content/assets/img/social-icons/circle-black/youtube-circle-black.png");
-        helper.setFrom(System.getenv("email"));
+        helper.setFrom(email);
         helper.setTo(recieverEmail);
         helper.setSubject(subject);
         String html = templateEngine.process(template,context);
 
         helper.setText(html,true);
 
-
-        emailSender.send(message);
+        try {
+            emailSender.send(message);
+        } catch (Exception e){
+            log.info("{}",e);
+        }
     }
 }

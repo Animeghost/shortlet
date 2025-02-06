@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 @Entity @Getter @Setter
 @ToString @AllArgsConstructor
 @NoArgsConstructor
-public class Amenities {
+public class  Amenities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
